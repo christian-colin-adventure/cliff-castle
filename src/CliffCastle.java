@@ -1,42 +1,57 @@
 import java.util.Random;
 import java.util.Scanner;
 
-public class adventureGame {
+public class CliffCastle {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         Random rand = new Random();
 
         // Player attributes
-        int heroHealth = 100;
-        int heroArmor = 25;
-        int heroAttack = 25;
-        int heroPotion = 5;
-        boolean wearingHelm = false;
+//        int heroHealth = 100;
+//        int heroArmor = 25;
+//        int heroAttack = 25;
+//        int heroPotion = 5;
+//        boolean wearingHelm = false;
+
+        Hero hero = new Hero("Hero");
+        hero.setClassAtt("Warrior");
 
         // CPU attributes
-        int actualCannibalLaBeoufHealth = 50;
-        int actualCannibalLaBeoufArmor = 0;
-        int actualCannibalLaBeoufAttack = 10;
-        String actualCannibalLaBeoufName = "The Cannibal";
+//        int actualCannibalLaBeoufHealth = 50;
+//        int actualCannibalLaBeoufArmor = 0;
+//        int actualCannibalLaBeoufAttack = 10;
+//        String actualCannibalLaBeoufName = "The Cannibal";
+
+        Enemy actualCannibalLaBeouf = new Enemy(50, 0, 10, "The Cannibal");
 
         // CPU attributes
-        int darkKnightHealth = 100;
-        int darkKnightArmor = 25;
-        int darkKnightAttack = 15;
-        String darkKnightName = "Death Knight";
+//        int darkKnightHealth = 100;
+//        int darkKnightArmor = 25;
+//        int darkKnightAttack = 15;
+//        String darkKnightName = "Death Knight";
+
+        Enemy darkKnight = new Enemy(100, 25, 15, "Death Knight");
+
 
         // CPU attributes
-        int vampireLordHealth = 200;
-        int vampireLordArmor = 50;
-        int vampireLordAttack = 20;
-        String vampireLordName = "Lord of the Castle";
+//        int vampireLordHealth = 200;
+//        int vampireLordArmor = 50;
+//        int vampireLordAttack = 20;
+//        String vampireLordName = "Lord of the Castle";
+
+        Enemy vampireLord = new Enemy(200, 50, 20, "Lord of The Castle");
+
 
         // CPU attributes
-        int dragonHealth = 300;
-        int dragonArmor = 0;
-        int dragonAttack = 25;
-        String dragonName = "Dragon";
+//        int dragonHealth = 300;
+//        int dragonArmor = 0;
+//        int dragonAttack = 25;
+//        String dragonName = "Dragon";
+
+        Enemy dragon = new Enemy(300, 0, 25, "Dragon");
+
+
 
 
         String heroName = "";
@@ -76,9 +91,9 @@ public class adventureGame {
             System.out.println("You are a hero of great standing in the local village, but what is your name?");
             heroName = sc.nextLine();
             if (heroName.trim().equalsIgnoreCase("cheater")) {
-                heroHealth = 10000;
-                heroArmor = 10000;
-                heroAttack = 10000;
+                hero.setHealth(10000);
+                hero.setArmor(10000);
+                hero.setAttack(10000);
             }
             System.out.println("                             ___\n" +
                     "                            / : \\\n" +
@@ -151,102 +166,12 @@ public class adventureGame {
             System.exit(0);
         }
 
-        while (heroHealth > 0 && actualCannibalLaBeoufHealth > 0) {
-            System.out.println(heroName + "'s Health: " + heroHealth + ", Armor: " + heroArmor + ", Potions: " + heroPotion);
-            System.out.println(actualCannibalLaBeoufName + "'s Health: " + actualCannibalLaBeoufHealth + ", Armor: " + actualCannibalLaBeoufArmor);
-            System.out.println("Attack, Drink Potion, Run");
-            String choice = sc.nextLine();
-            if (choice.trim().equalsIgnoreCase("attack")) {
-                int[] updatedEnemyStats = attack(actualCannibalLaBeoufHealth, actualCannibalLaBeoufArmor, heroAttack);
-                System.out.println("You hit the enemy for: " + (updatedEnemyStats[2]));
-                actualCannibalLaBeoufHealth = updatedEnemyStats[0];
-                actualCannibalLaBeoufArmor = updatedEnemyStats[1];
-            } else if (choice.trim().equalsIgnoreCase("potion") || choice.trim().equalsIgnoreCase("drink potion")) {
-                int[] updatedHeroStats = drinkPotion(heroPotion, heroHealth);
-                heroHealth = updatedHeroStats[0];
-                heroPotion = updatedHeroStats[1];
-            } else if (choice.trim().equalsIgnoreCase("run")) {
-                heroHealth = 0;
-                System.out.println("                      ,____\n" +
-                        "                      |---.\\\n" +
-                        "              ___     |    `\n" +
-                        "             / .-\\  ./=)\n" +
-                        "            |  |\"|_/\\/|\n" +
-                        "            ;  |-;| /_|\n" +
-                        "           / \\_| |/ \\ |\n" +
-                        "          /      \\/\\( |\n" +
-                        "          |   /  |` ) |\n" +
-                        "          /   \\ _/    |\n" +
-                        "         /--._/  \\    |\n" +
-                        "         `/|)    |    /\n" +
-                        "           /     |   |\n" +
-                        "         .'      |   |\n" +
-                        "        /         \\  |\n" +
-                        "       (_.-.__.__./  /");
-                System.out.println("You are dead!");
-            } else {
-                continue;
-            }
-
-            int[] updatedHeroStats = attack(heroHealth, heroArmor, actualCannibalLaBeoufAttack);
-            System.out.println("The enemy has hit you for: " + (updatedHeroStats[2]));
-            heroHealth = updatedHeroStats[0];
-            heroArmor = updatedHeroStats[1];
-
-        }
-        if (heroHealth <= 0) {
-            System.out.println("                      ,____\n" +
-                    "                      |---.\\\n" +
-                    "              ___     |    `\n" +
-                    "             / .-\\  ./=)\n" +
-                    "            |  |\"|_/\\/|\n" +
-                    "            ;  |-;| /_|\n" +
-                    "           / \\_| |/ \\ |\n" +
-                    "          /      \\/\\( |\n" +
-                    "          |   /  |` ) |\n" +
-                    "          /   \\ _/    |\n" +
-                    "         /--._/  \\    |\n" +
-                    "         `/|)    |    /\n" +
-                    "           /     |   |\n" +
-                    "         .'      |   |\n" +
-                    "        /         \\  |\n" +
-                    "       (_.-.__.__./  /");
-            System.out.println("You are dead!");
+        boolean fightResult1 = fight(hero, actualCannibalLaBeouf);
+        if (!fightResult1) {
+            heroDeath();
         } else {
-            System.out.println("88.._|      | `-.  | `.  -_-_ _-_  _-  _- -_ -  .'|   |.'|     |  _..88\n" +
-                    "88   `-.._  |    |`!  |`.  -_ -__ -_ _- _-_-  .'  |.;'   |   _.!-'|  88\n" +
-                    "88      | `-!._  |  `;!  ;. _______________ ,'| .-' |   _!.i'     |  88\n" +
-                    "88..__  |     |`-!._ | `.| |_______________||.\"'|  _!.;'   |     _|..88\n" +
-                    "88   |``\"..__ |    |`\";.| i|_|MMMMMMMMMMM|_|'| _!-|   |   _|..-|'    88\n" +
-                    "88   |      |``--..|_ | `;!|l|MMoMMMMoMMM|1|.'j   |_..!-'|     |     88\n" +
-                    "88   |      |    |   |`-,!_|_|MMMMP'YMMMM|_||.!-;'  |    |     |     88\n" +
-                    "88___|______|____!.,.!,.!,!|d|MMMo * loMM|p|,!,.!.,.!..__|_____|_____88\n" +
-                    "88      |     |    |  |  | |_|MMMMb,dMMMM|_|| |   |   |    |      |  88\n" +
-                    "88      |     |    |..!-;'i|r|MPYMoMMMMoM|r| |`-..|   |    |      |  88\n" +
-                    "88      |    _!.-j'  | _!,\"|_|M)(MMMMoMMM|_||!._|  `i-!.._ |      |  88\n" +
-                    "88     _!.-'|    | _.\"|  !;|1|MbdMMoMMMMM|l|`.| `-._|    |``-.._  |  88\n" +
-                    "88..-i'     |  _.''|  !-| !|_|MMMoMMMMoMM|_|.|`-. | ``._ |     |``\"..88\n" +
-                    "88   |      |.|    |.|  !| |u|MoMMMMoMMMM|n||`. |`!   | `\".    |     88\n" +
-                    "88   |  _.-'  |  .'  |.' |/|_|MMMMoMMMMoM|_|! |`!  `,.|    |-._|     88\n" +
-                    "88  _!\"'|     !.'|  .'| .'|[@]MMMMMMMMMMM[@] \\|  `. | `._  |   `-._  88\n" +
-                    "88-'    |   .'   |.|  |/| /                 \\|`.  |`!    |.|      |`-88\n" +
-                    "88      |_.'|   .' | .' |/                   \\  \\ |  `.  | `._    |  88\n" +
-                    "88     .'   | .'   |/|  /                     \\ |`!   |`.|    `.  |  88\n" +
-                    "88  _.'     !'|   .' | /                       \\|  `  |  `.    |`.|  88");
-            System.out.println("You have defeated the cannibal, as he lays mortally wounded he whispers to you \"Caliburn...\", his cauldron now grows colder has you proceed into the castle. \n");
-            System.out.println("Would you like to check your current status?");
-            String statusCheck = sc.nextLine();
-            if (statusCheck.trim().equalsIgnoreCase("yes")) {
-                System.out.println(heroName + "'s Health: " + heroHealth + ", Armor: " + heroArmor + ", Potions: " + heroPotion);
-            }
-            System.out.println("Drink a potion before proceeding?");
-            String potionCheck = sc.nextLine();
-            if (potionCheck.trim().trim().equalsIgnoreCase("yes")) {
-                int[] updatedHeroStats = drinkPotion(heroPotion, heroHealth);
-                heroHealth = updatedHeroStats[0];
-                heroPotion = updatedHeroStats[1];
-                System.out.println(heroName + "'s Health: " + heroHealth + ", Armor: " + heroArmor + ", Potions: " + heroPotion);
-            }
+            afterFightScreen(hero, "You have defeated the cannibal, as he lays mortally wounded he whispers to you \"Caliburn...\", his cauldron now grows colder has you proceed into the castle. \n");
+        }
             System.out.println("                   _.--.    .--._\n" +
                     "                 .\"  .\"      \".  \".\n" +
                     "                ;  .\"    /\\    \".  ;\n" +
@@ -272,41 +197,8 @@ public class adventureGame {
             if (herosChat.trim().equalsIgnoreCase("give me caliburn")) {
                 System.out.println("The knight seems bewildered \'As you wish, brave one\". He places his sword on the ground and walks out of the castle.\n");
                 System.out.println("With Caliburn in your possession, you feel more powerful! You have gained 20 attack power");
-                heroAttack += 20;
-                System.out.println("88.._|      | `-.  | `.  -_-_ _-_  _-  _- -_ -  .'|   |.'|     |  _..88\n" +
-                        "88   `-.._  |    |`!  |`.  -_ -__ -_ _- _-_-  .'  |.;'   |   _.!-'|  88\n" +
-                        "88      | `-!._  |  `;!  ;. _______________ ,'| .-' |   _!.i'     |  88\n" +
-                        "88..__  |     |`-!._ | `.| |_______________||.\"'|  _!.;'   |     _|..88\n" +
-                        "88   |``\"..__ |    |`\";.| i|_|MMMMMMMMMMM|_|'| _!-|   |   _|..-|'    88\n" +
-                        "88   |      |``--..|_ | `;!|l|MMoMMMMoMMM|1|.'j   |_..!-'|     |     88\n" +
-                        "88   |      |    |   |`-,!_|_|MMMMP'YMMMM|_||.!-;'  |    |     |     88\n" +
-                        "88___|______|____!.,.!,.!,!|d|MMMo * loMM|p|,!,.!.,.!..__|_____|_____88\n" +
-                        "88      |     |    |  |  | |_|MMMMb,dMMMM|_|| |   |   |    |      |  88\n" +
-                        "88      |     |    |..!-;'i|r|MPYMoMMMMoM|r| |`-..|   |    |      |  88\n" +
-                        "88      |    _!.-j'  | _!,\"|_|M)(MMMMoMMM|_||!._|  `i-!.._ |      |  88\n" +
-                        "88     _!.-'|    | _.\"|  !;|1|MbdMMoMMMMM|l|`.| `-._|    |``-.._  |  88\n" +
-                        "88..-i'     |  _.''|  !-| !|_|MMMoMMMMoMM|_|.|`-. | ``._ |     |``\"..88\n" +
-                        "88   |      |.|    |.|  !| |u|MoMMMMoMMMM|n||`. |`!   | `\".    |     88\n" +
-                        "88   |  _.-'  |  .'  |.' |/|_|MMMMoMMMMoM|_|! |`!  `,.|    |-._|     88\n" +
-                        "88  _!\"'|     !.'|  .'| .'|[@]MMMMMMMMMMM[@] \\|  `. | `._  |   `-._  88\n" +
-                        "88-'    |   .'   |.|  |/| /                 \\|`.  |`!    |.|      |`-88\n" +
-                        "88      |_.'|   .' | .' |/                   \\  \\ |  `.  | `._    |  88\n" +
-                        "88     .'   | .'   |/|  /                     \\ |`!   |`.|    `.  |  88\n" +
-                        "88  _.'     !'|   .' | /                       \\|  `  |  `.    |`.|  88");
-                System.out.println("The knight is now behind you. You see a hall leading further into the castle.");
-                System.out.println("Would you like to check your current status?");
-                statusCheck = sc.nextLine();
-                if (statusCheck.trim().equalsIgnoreCase("yes")) {
-                    System.out.println(heroName + "'s Health: " + heroHealth + ", Armor: " + heroArmor + ", Potions: " + heroPotion);
-                }
-                System.out.println("Drink a potion before proceeding?");
-                potionCheck = sc.nextLine();
-                if (potionCheck.trim().equalsIgnoreCase("yes")) {
-                    int[] updatedHeroStats = drinkPotion(heroPotion, heroHealth);
-                    heroHealth = updatedHeroStats[0];
-                    heroPotion = updatedHeroStats[1];
-                    System.out.println(heroName + "'s Health: " + heroHealth + ", Armor: " + heroArmor + ", Potions: " + heroPotion);
-                }
+                hero.increaseAttack(20);
+                afterFightScreen(hero,"The knight is now behind you. You see a hall leading further into the castle.");
                 System.out.println("   ,-' ;  ! `-." + "        ,-' ;  ! `-.\n" +
                         "  / :  !  :  . \\" + "      / :  !  :  . \\\n" +
                         " |_ ;   __:  ;  |" + "    |_ ;   __:  ;  |\n" +
@@ -347,7 +239,7 @@ public class adventureGame {
                     String fountainChoice = sc.nextLine();
                     if (fountainChoice.trim().equalsIgnoreCase("yes")) {
                         System.out.println("You feel revitalized!");
-                        heroHealth = 150;
+                        hero.setHealth(150);
                     } else {
                         System.out.println("You walk away...");
                     }
@@ -389,9 +281,9 @@ public class adventureGame {
                         System.out.println("You see a helmet, it looks better than the one you are currently wearing however it is glowing strangely, do you want to wear it?");
                         String helmetChoice = sc.nextLine();
                         if (helmetChoice.trim().equalsIgnoreCase("yes")) {
-                            wearingHelm = true;
+                            hero.setWearingHelm(true);
                             System.out.println("You feel more protected!");
-                            heroArmor += 50;
+                            hero.increaseArmor(50);
                         } else if (helmetChoice.trim().equalsIgnoreCase("no")) {
                             System.out.println("You walk away...");
                         }
@@ -402,40 +294,7 @@ public class adventureGame {
                 }
 
 //                after Forked path
-                System.out.println("88.._|      | `-.  | `.  -_-_ _-_  _-  _- -_ -  .'|   |.'|     |  _..88\n" +
-                        "88   `-.._  |    |`!  |`.  -_ -__ -_ _- _-_-  .'  |.;'   |   _.!-'|  88\n" +
-                        "88      | `-!._  |  `;!  ;. _______________ ,'| .-' |   _!.i'     |  88\n" +
-                        "88..__  |     |`-!._ | `.| |_______________||.\"'|  _!.;'   |     _|..88\n" +
-                        "88   |``\"..__ |    |`\";.| i|_|MMMMMMMMMMM|_|'| _!-|   |   _|..-|'    88\n" +
-                        "88   |      |``--..|_ | `;!|l|MMoMMMMoMMM|1|.'j   |_..!-'|     |     88\n" +
-                        "88   |      |    |   |`-,!_|_|MMMMP'YMMMM|_||.!-;'  |    |     |     88\n" +
-                        "88___|______|____!.,.!,.!,!|d|MMMo * loMM|p|,!,.!.,.!..__|_____|_____88\n" +
-                        "88      |     |    |  |  | |_|MMMMb,dMMMM|_|| |   |   |    |      |  88\n" +
-                        "88      |     |    |..!-;'i|r|MPYMoMMMMoM|r| |`-..|   |    |      |  88\n" +
-                        "88      |    _!.-j'  | _!,\"|_|M)(MMMMoMMM|_||!._|  `i-!.._ |      |  88\n" +
-                        "88     _!.-'|    | _.\"|  !;|1|MbdMMoMMMMM|l|`.| `-._|    |``-.._  |  88\n" +
-                        "88..-i'     |  _.''|  !-| !|_|MMMoMMMMoMM|_|.|`-. | ``._ |     |``\"..88\n" +
-                        "88   |      |.|    |.|  !| |u|MoMMMMoMMMM|n||`. |`!   | `\".    |     88\n" +
-                        "88   |  _.-'  |  .'  |.' |/|_|MMMMoMMMMoM|_|! |`!  `,.|    |-._|     88\n" +
-                        "88  _!\"'|     !.'|  .'| .'|[@]MMMMMMMMMMM[@] \\|  `. | `._  |   `-._  88\n" +
-                        "88-'    |   .'   |.|  |/| /                 \\|`.  |`!    |.|      |`-88\n" +
-                        "88      |_.'|   .' | .' |/                   \\  \\ |  `.  | `._    |  88\n" +
-                        "88     .'   | .'   |/|  /                     \\ |`!   |`.|    `.  |  88\n" +
-                        "88  _.'     !'|   .' | /                       \\|  `  |  `.    |`.|  88");
-                System.out.println("You feel an evil presence ahead...");
-                System.out.println("Would you like to check your current status?");
-                statusCheck = sc.nextLine();
-                if (statusCheck.trim().equalsIgnoreCase("yes")) {
-                    System.out.println(heroName + "'s Health: " + heroHealth + ", Armor: " + heroArmor + ", Potions: " + heroPotion);
-                }
-                System.out.println("Drink a potion before proceeding?");
-                potionCheck = sc.nextLine();
-                if (potionCheck.trim().equalsIgnoreCase("yes")) {
-                    int[] updatedHeroStats = drinkPotion(heroPotion, heroHealth);
-                    heroHealth = updatedHeroStats[0];
-                    heroPotion = updatedHeroStats[1];
-                    System.out.println(heroName + "'s Health: " + heroHealth + ", Armor: " + heroArmor + ", Potions: " + heroPotion);
-                }
+                afterFightScreen(hero,"You feel an evil presence ahead...");
                 System.out.println("                                  _.-.\n" +
                         "                                 ._.-.\\\n" +
                         "                    .^         _.-'=. \\\\\n" +
@@ -471,50 +330,9 @@ public class adventureGame {
                         "                       \\|\\|\n");
                 System.out.println("You have arrived in the Throne Room, there is a large winged figured in front of you, it is much scarier than your previous opponents.\n");
                 System.out.println("\"Prepare yourself human, I have killed more people then you've ever met\" The winged figure says.");
-                while (heroHealth > 0 && vampireLordHealth > 0) {
-                    System.out.println(heroName + "'s Health: " + heroHealth + ", Armor: " + heroArmor + ", Potions: " + heroPotion);
-                    System.out.println(vampireLordName + "'s Health: " + vampireLordHealth + ", Armor: " + vampireLordArmor);
-                    System.out.println("Attack, Drink Potion, Run");
-                    String choice = sc.nextLine();
-                    if (choice.trim().equalsIgnoreCase("attack")) {
-                        int[] updatedEnemyStats = attack(vampireLordHealth, vampireLordArmor, heroAttack);
-                        System.out.println("You hit the enemy for: " + (updatedEnemyStats[2]));
-                        vampireLordHealth = updatedEnemyStats[0];
-                        vampireLordArmor = updatedEnemyStats[1];
-                    } else if (choice.trim().equalsIgnoreCase("potion") || choice.trim().equalsIgnoreCase("drink potion")) {
-                        int[] updatedHeroStats = drinkPotion(heroPotion, heroHealth);
-                        heroHealth = updatedHeroStats[0];
-                        heroPotion = updatedHeroStats[1];
-                    } else if (choice.trim().equalsIgnoreCase("run")) {
-                        heroHealth = 0;
-                    } else {
-                        continue;
-                    }
-
-                    int[] updatedHeroStats = attack(heroHealth, heroArmor, vampireLordAttack);
-                    System.out.println("The enemy has hit you for: " + (updatedHeroStats[2]));
-                    heroHealth = updatedHeroStats[0];
-                    heroArmor = updatedHeroStats[1];
-
-                }
-                if (heroHealth <= 0) {
-                    System.out.println("                      ,____\n" +
-                            "                      |---.\\\n" +
-                            "              ___     |    `\n" +
-                            "             / .-\\  ./=)\n" +
-                            "            |  |\"|_/\\/|\n" +
-                            "            ;  |-;| /_|\n" +
-                            "           / \\_| |/ \\ |\n" +
-                            "          /      \\/\\( |\n" +
-                            "          |   /  |` ) |\n" +
-                            "          /   \\ _/    |\n" +
-                            "         /--._/  \\    |\n" +
-                            "         `/|)    |    /\n" +
-                            "           /     |   |\n" +
-                            "         .'      |   |\n" +
-                            "        /         \\  |\n" +
-                            "       (_.-.__.__./  /");
-                    System.out.println("You are dead!");
+                boolean fightResult2x = fight(hero,vampireLord);
+                if (!fightResult2x) {
+                    heroDeath();
 
                 } else {
                     System.out.println("            ^^                   @@@@@@@@@\n" +
@@ -528,13 +346,13 @@ public class adventureGame {
                             " ~  ~       ~ ~      ~           ~~ ~~~~~~  ~      ~~  ~             ~~\n" +
                             "       ~             ~        ~      ~      ~~   ~             ~");
                     System.out.printf("You have defeated your enemies and the castle lays empty. You have earned your place as lord of the castle.\n The treasure is yours, the throne is yours. All hail Lord %s\n\n", heroName);
-                    if(wearingHelm == true){
+                    if (hero.isWearingHelm()) {
                         System.out.println("Caliburn whispers to you. \"You must toss the cursed helmet to sea or you'll never be free.\"");
                         System.out.println("Do you want to throw the helmet?");
                         String helmThrow = sc.nextLine();
-                        if(helmThrow.trim().equalsIgnoreCase("yes")){
+                        if (helmThrow.trim().equalsIgnoreCase("yes")) {
                             System.out.println("You toss the helmet, you wouldn't want to upset Caliburn... You feel rejuvenated!");
-                            heroHealth = 175;
+                            hero.setHealth(175);
                             System.out.println("                                               _   __,----'~~~~~~~~~`-----.__\n" +
                                     "                                        .  .    `//====-              ____,-'~`\n" +
                                     "                        -.            \\_|// .   /||\\\\  `~~~~`---.___./\n" +
@@ -555,50 +373,9 @@ public class adventureGame {
                                     "             /^>                           ///,--~`-\\\n" +
                                     "            `  `                                       ");
                             System.out.println("The ground shakes and you are suddenly staring at a 25 foot tall reptile with wings. You must fight to survive!");
-                            while (heroHealth > 0 && dragonHealth > 0) {
-                                System.out.println(heroName + "'s Health: " + heroHealth + ", Armor: " + heroArmor + ", Potions: " + heroPotion);
-                                System.out.println(dragonName + "'s Health: " + dragonHealth + ", Armor: " + dragonArmor);
-                                System.out.println("Attack, Drink Potion, Run");
-                                String choice = sc.nextLine();
-                                if (choice.trim().equalsIgnoreCase("attack")) {
-                                    int[] updatedEnemyStats = attack(dragonHealth, dragonArmor, heroAttack);
-                                    System.out.println("You hit the enemy for: " + (updatedEnemyStats[2]));
-                                    dragonHealth = updatedEnemyStats[0];
-                                    dragonArmor = updatedEnemyStats[1];
-                                } else if (choice.trim().equalsIgnoreCase("potion") || choice.trim().equalsIgnoreCase("drink potion")) {
-                                    int[] updatedHeroStats = drinkPotion(heroPotion, heroHealth);
-                                    heroHealth = updatedHeroStats[0];
-                                    heroPotion = updatedHeroStats[1];
-                                } else if (choice.trim().equalsIgnoreCase("run")) {
-                                    heroHealth = 0;
-                                } else {
-                                    continue;
-                                }
-
-                                int[] updatedHeroStats = attack(heroHealth, heroArmor, dragonAttack);
-                                System.out.println("The enemy has hit you for: " + (updatedHeroStats[2]));
-                                heroHealth = updatedHeroStats[0];
-                                heroArmor = updatedHeroStats[1];
-
-                            }
-                            if (heroHealth <= 0) {
-                                System.out.println("                      ,____\n" +
-                                        "                      |---.\\\n" +
-                                        "              ___     |    `\n" +
-                                        "             / .-\\  ./=)\n" +
-                                        "            |  |\"|_/\\/|\n" +
-                                        "            ;  |-;| /_|\n" +
-                                        "           / \\_| |/ \\ |\n" +
-                                        "          /      \\/\\( |\n" +
-                                        "          |   /  |` ) |\n" +
-                                        "          /   \\ _/    |\n" +
-                                        "         /--._/  \\    |\n" +
-                                        "         `/|)    |    /\n" +
-                                        "           /     |   |\n" +
-                                        "         .'      |   |\n" +
-                                        "        /         \\  |\n" +
-                                        "       (_.-.__.__./  /");
-                                System.out.println("You are dead!");
+                            boolean fightResult3x = fight(hero,dragon);
+                            if (!fightResult3x) {
+                                heroDeath();
 
                             } else {
                                 System.out.println("     __/)     (\\__\n" +
@@ -614,8 +391,7 @@ public class adventureGame {
                                 System.out.printf("\"You have defeated a great evil today and have earned our divine gratitude.\nLive the rest of your days in your castle.\nWell see you when you pass to the next realm, Great Hero %s\"", heroName);
                                 System.exit(0);
                             }
-                        }
-                        else{
+                        } else {
                             System.out.println("You choose to ignore Caliburn and your soul is cursed for all of eternity");
                             System.exit(0);
                         }
@@ -625,86 +401,11 @@ public class adventureGame {
 
             }
             System.out.println("\"Silence fool!\" He responds has he raises his blade.\n");
-            while (heroHealth > 0 && darkKnightHealth > 0) {
-                System.out.println(heroName + "'s Health: " + heroHealth + ", Armor: " + heroArmor + ", Potions: " + heroPotion);
-                System.out.println(darkKnightName + "'s Health: " + darkKnightHealth + ", Armor: " + darkKnightArmor);
-                System.out.println("Attack, Drink Potion, Run");
-                String choice = sc.nextLine();
-                if (choice.trim().equalsIgnoreCase("attack")) {
-                    int[] updatedEnemyStats = attack(darkKnightHealth, darkKnightArmor, heroAttack);
-                    System.out.println("You hit the enemy for: " + (updatedEnemyStats[2]));
-                    darkKnightHealth = updatedEnemyStats[0];
-                    darkKnightArmor = updatedEnemyStats[1];
-                } else if (choice.trim().equalsIgnoreCase("potion") || choice.trim().equalsIgnoreCase("drink potion")) {
-                    int[] updatedHeroStats = drinkPotion(heroPotion, heroHealth);
-                    heroHealth = updatedHeroStats[0];
-                    heroPotion = updatedHeroStats[1];
-                } else if (choice.trim().equalsIgnoreCase("run")) {
-                    heroHealth = 0;
-                } else {
-                    continue;
-                }
-
-                int[] updatedHeroStats = attack(heroHealth, heroArmor, darkKnightAttack);
-                System.out.println("The enemy has hit you for: " + (updatedHeroStats[2]));
-                heroHealth = updatedHeroStats[0];
-                heroArmor = updatedHeroStats[1];
-
-            }
-            if (heroHealth <= 0) {
-                System.out.println("                      ,____\n" +
-                        "                      |---.\\\n" +
-                        "              ___     |    `\n" +
-                        "             / .-\\  ./=)\n" +
-                        "            |  |\"|_/\\/|\n" +
-                        "            ;  |-;| /_|\n" +
-                        "           / \\_| |/ \\ |\n" +
-                        "          /      \\/\\( |\n" +
-                        "          |   /  |` ) |\n" +
-                        "          /   \\ _/    |\n" +
-                        "         /--._/  \\    |\n" +
-                        "         `/|)    |    /\n" +
-                        "           /     |   |\n" +
-                        "         .'      |   |\n" +
-                        "        /         \\  |\n" +
-                        "       (_.-.__.__./  /");
-                System.out.println("You are dead!");
-
+            boolean fight2a = fight(hero,darkKnight);
+            if (!fight2a) {
+                heroDeath();
             } else {
-                System.out.println("88.._|      | `-.  | `.  -_-_ _-_  _-  _- -_ -  .'|   |.'|     |  _..88\n" +
-                        "88   `-.._  |    |`!  |`.  -_ -__ -_ _- _-_-  .'  |.;'   |   _.!-'|  88\n" +
-                        "88      | `-!._  |  `;!  ;. _______________ ,'| .-' |   _!.i'     |  88\n" +
-                        "88..__  |     |`-!._ | `.| |_______________||.\"'|  _!.;'   |     _|..88\n" +
-                        "88   |``\"..__ |    |`\";.| i|_|MMMMMMMMMMM|_|'| _!-|   |   _|..-|'    88\n" +
-                        "88   |      |``--..|_ | `;!|l|MMoMMMMoMMM|1|.'j   |_..!-'|     |     88\n" +
-                        "88   |      |    |   |`-,!_|_|MMMMP'YMMMM|_||.!-;'  |    |     |     88\n" +
-                        "88___|______|____!.,.!,.!,!|d|MMMo * loMM|p|,!,.!.,.!..__|_____|_____88\n" +
-                        "88      |     |    |  |  | |_|MMMMb,dMMMM|_|| |   |   |    |      |  88\n" +
-                        "88      |     |    |..!-;'i|r|MPYMoMMMMoM|r| |`-..|   |    |      |  88\n" +
-                        "88      |    _!.-j'  | _!,\"|_|M)(MMMMoMMM|_||!._|  `i-!.._ |      |  88\n" +
-                        "88     _!.-'|    | _.\"|  !;|1|MbdMMoMMMMM|l|`.| `-._|    |``-.._  |  88\n" +
-                        "88..-i'     |  _.''|  !-| !|_|MMMoMMMMoMM|_|.|`-. | ``._ |     |``\"..88\n" +
-                        "88   |      |.|    |.|  !| |u|MoMMMMoMMMM|n||`. |`!   | `\".    |     88\n" +
-                        "88   |  _.-'  |  .'  |.' |/|_|MMMMoMMMMoM|_|! |`!  `,.|    |-._|     88\n" +
-                        "88  _!\"'|     !.'|  .'| .'|[@]MMMMMMMMMMM[@] \\|  `. | `._  |   `-._  88\n" +
-                        "88-'    |   .'   |.|  |/| /                 \\|`.  |`!    |.|      |`-88\n" +
-                        "88      |_.'|   .' | .' |/                   \\  \\ |  `.  | `._    |  88\n" +
-                        "88     .'   | .'   |/|  /                     \\ |`!   |`.|    `.  |  88\n" +
-                        "88  _.'     !'|   .' | /                       \\|  `  |  `.    |`.|  88");
-                System.out.println("The knight is now behind you. You see a hall leading further into the castle.");
-                System.out.println("Would you like to check your current status?");
-                statusCheck = sc.nextLine();
-                if (statusCheck.trim().equalsIgnoreCase("yes")) {
-                    System.out.println(heroName + "'s Health: " + heroHealth + ", Armor: " + heroArmor + ", Potions: " + heroPotion);
-                }
-                System.out.println("Drink a potion before proceeding?");
-                potionCheck = sc.nextLine();
-                if (potionCheck.trim().equalsIgnoreCase("yes")) {
-                    int[] updatedHeroStats = drinkPotion(heroPotion, heroHealth);
-                    heroHealth = updatedHeroStats[0];
-                    heroPotion = updatedHeroStats[1];
-                    System.out.println(heroName + "'s Health: " + heroHealth + ", Armor: " + heroArmor + ", Potions: " + heroPotion);
-                }
+                afterFightScreen(hero,"The knight is now behind you. You see a hall leading further into the castle.");
                 System.out.println("   ,-' ;  ! `-." + "        ,-' ;  ! `-.\n" +
                         "  / :  !  :  . \\" + "      / :  !  :  . \\\n" +
                         " |_ ;   __:  ;  |" + "    |_ ;   __:  ;  |\n" +
@@ -745,7 +446,7 @@ public class adventureGame {
                     String fountainChoice = sc.nextLine();
                     if (fountainChoice.trim().equalsIgnoreCase("yes")) {
                         System.out.println("You feel revitalized!");
-                        heroHealth = 150;
+                        hero.setHealth(150);
                     } else {
                         System.out.println("You walk away...");
                     }
@@ -788,7 +489,7 @@ public class adventureGame {
                         String helmetChoice = sc.nextLine();
                         if (helmetChoice.trim().equalsIgnoreCase("yes")) {
                             System.out.println("You feel more protected!");
-                            heroArmor += 50;
+                            hero.increaseArmor(50);
                         } else if (helmetChoice.trim().equalsIgnoreCase("no")) {
                             System.out.println("You walk away...");
                         }
@@ -799,40 +500,7 @@ public class adventureGame {
                 }
 
 //                after Forked path
-                System.out.println("88.._|      | `-.  | `.  -_-_ _-_  _-  _- -_ -  .'|   |.'|     |  _..88\n" +
-                        "88   `-.._  |    |`!  |`.  -_ -__ -_ _- _-_-  .'  |.;'   |   _.!-'|  88\n" +
-                        "88      | `-!._  |  `;!  ;. _______________ ,'| .-' |   _!.i'     |  88\n" +
-                        "88..__  |     |`-!._ | `.| |_______________||.\"'|  _!.;'   |     _|..88\n" +
-                        "88   |``\"..__ |    |`\";.| i|_|MMMMMMMMMMM|_|'| _!-|   |   _|..-|'    88\n" +
-                        "88   |      |``--..|_ | `;!|l|MMoMMMMoMMM|1|.'j   |_..!-'|     |     88\n" +
-                        "88   |      |    |   |`-,!_|_|MMMMP'YMMMM|_||.!-;'  |    |     |     88\n" +
-                        "88___|______|____!.,.!,.!,!|d|MMMo * loMM|p|,!,.!.,.!..__|_____|_____88\n" +
-                        "88      |     |    |  |  | |_|MMMMb,dMMMM|_|| |   |   |    |      |  88\n" +
-                        "88      |     |    |..!-;'i|r|MPYMoMMMMoM|r| |`-..|   |    |      |  88\n" +
-                        "88      |    _!.-j'  | _!,\"|_|M)(MMMMoMMM|_||!._|  `i-!.._ |      |  88\n" +
-                        "88     _!.-'|    | _.\"|  !;|1|MbdMMoMMMMM|l|`.| `-._|    |``-.._  |  88\n" +
-                        "88..-i'     |  _.''|  !-| !|_|MMMoMMMMoMM|_|.|`-. | ``._ |     |``\"..88\n" +
-                        "88   |      |.|    |.|  !| |u|MoMMMMoMMMM|n||`. |`!   | `\".    |     88\n" +
-                        "88   |  _.-'  |  .'  |.' |/|_|MMMMoMMMMoM|_|! |`!  `,.|    |-._|     88\n" +
-                        "88  _!\"'|     !.'|  .'| .'|[@]MMMMMMMMMMM[@] \\|  `. | `._  |   `-._  88\n" +
-                        "88-'    |   .'   |.|  |/| /                 \\|`.  |`!    |.|      |`-88\n" +
-                        "88      |_.'|   .' | .' |/                   \\  \\ |  `.  | `._    |  88\n" +
-                        "88     .'   | .'   |/|  /                     \\ |`!   |`.|    `.  |  88\n" +
-                        "88  _.'     !'|   .' | /                       \\|  `  |  `.    |`.|  88");
-                System.out.println("You feel an evil presence ahead...");
-                System.out.println("Would you like to check your current status?");
-                statusCheck = sc.nextLine();
-                if (statusCheck.trim().equalsIgnoreCase("yes")) {
-                    System.out.println(heroName + "'s Health: " + heroHealth + ", Armor: " + heroArmor + ", Potions: " + heroPotion);
-                }
-                System.out.println("Drink a potion before proceeding?");
-                potionCheck = sc.nextLine();
-                if (potionCheck.trim().equalsIgnoreCase("yes")) {
-                    int[] updatedHeroStats = drinkPotion(heroPotion, heroHealth);
-                    heroHealth = updatedHeroStats[0];
-                    heroPotion = updatedHeroStats[1];
-                    System.out.println(heroName + "'s Health: " + heroHealth + ", Armor: " + heroArmor + ", Potions: " + heroPotion);
-                }
+                afterFightScreen(hero,"You feel an evil presence ahead...");
                 System.out.println("                                  _.-.\n" +
                         "                                 ._.-.\\\n" +
                         "                    .^         _.-'=. \\\\\n" +
@@ -868,50 +536,9 @@ public class adventureGame {
                         "                       \\|\\|\n");
                 System.out.println("You have arrived in the Throne Room, there is a large winged figured in front of you, it is much scarier than your previous opponents.\n");
                 System.out.println("\"Prepare yourself human, I have killed more people then you've ever met\" The winged figure says.");
-                while (heroHealth > 0 && vampireLordHealth > 0) {
-                    System.out.println(heroName + "'s Health: " + heroHealth + ", Armor: " + heroArmor + ", Potions: " + heroPotion);
-                    System.out.println(vampireLordName + "'s Health: " + vampireLordHealth + ", Armor: " + vampireLordArmor);
-                    System.out.println("Attack, Drink Potion, Run");
-                    String choice = sc.nextLine();
-                    if (choice.trim().equalsIgnoreCase("attack")) {
-                        int[] updatedEnemyStats = attack(vampireLordHealth, vampireLordArmor, heroAttack);
-                        System.out.println("You hit the enemy for: " + (updatedEnemyStats[2]));
-                        vampireLordHealth = updatedEnemyStats[0];
-                        vampireLordArmor = updatedEnemyStats[1];
-                    } else if (choice.trim().equalsIgnoreCase("potion") || choice.trim().equalsIgnoreCase("drink potion")) {
-                        int[] updatedHeroStats = drinkPotion(heroPotion, heroHealth);
-                        heroHealth = updatedHeroStats[0];
-                        heroPotion = updatedHeroStats[1];
-                    } else if (choice.trim().equalsIgnoreCase("run")) {
-                        heroHealth = 0;
-                    } else {
-                        continue;
-                    }
-
-                    int[] updatedHeroStats = attack(heroHealth, heroArmor, vampireLordAttack);
-                    System.out.println("The enemy has hit you for: " + (updatedHeroStats[2]));
-                    heroHealth = updatedHeroStats[0];
-                    heroArmor = updatedHeroStats[1];
-
-                }
-                if (heroHealth <= 0) {
-                    System.out.println("                      ,____\n" +
-                            "                      |---.\\\n" +
-                            "              ___     |    `\n" +
-                            "             / .-\\  ./=)\n" +
-                            "            |  |\"|_/\\/|\n" +
-                            "            ;  |-;| /_|\n" +
-                            "           / \\_| |/ \\ |\n" +
-                            "          /      \\/\\( |\n" +
-                            "          |   /  |` ) |\n" +
-                            "          /   \\ _/    |\n" +
-                            "         /--._/  \\    |\n" +
-                            "         `/|)    |    /\n" +
-                            "           /     |   |\n" +
-                            "         .'      |   |\n" +
-                            "        /         \\  |\n" +
-                            "       (_.-.__.__./  /");
-                    System.out.println("You are dead!");
+                boolean fightResult3a = fight(hero,vampireLord);
+                if (!fightResult3a) {
+                    heroDeath();
 
                 } else {
                     System.out.println("            ^^                   @@@@@@@@@\n" +
@@ -929,31 +556,29 @@ public class adventureGame {
                 }
             }
         }
-    }
 
 
-    public static int[] attack(int health, int armor, int maxDamage) {
-        Random rand = new Random();
-        // Health and armor is going to equal opposition health and armor.
-        // Attack points is going to be whoever is attacking.
-        int hit;
-        if (maxDamage > 40) {
 
-            hit = rand.nextInt(maxDamage - 15) + 15;
-        } else {
-            hit = rand.nextInt(maxDamage);
-
-        }
-
-        if (armor >= hit) {
-            armor = armor - hit;
-        } else {
-            health -= (hit - armor);
-            armor = 0;
-        }
-
-        return new int[]{health, armor, hit};
-    }
+//    public static int[] attack(int health, int armor, int maxDamage) {
+//        Random rand = new Random();
+//        // Health and armor is going to equal opposition health and armor.
+//        // Attack points is going to be whoever is attacking.
+//        int hit;
+//        if (maxDamage > 40) {
+//
+//            hit = rand.nextInt(maxDamage - 15) + 15;
+//        } else
+//            hit = rand.nextInt(maxDamage);
+//
+//        if (armor >= hit) {
+//            armor = armor - hit;
+//        } else {
+//            health -= (hit - armor);
+//            armor = 0;
+//        }
+//
+//        return new int[]{health, armor, hit};
+//    }
 
     public static int[] drinkPotion(int potion, int health) {
 
@@ -968,4 +593,135 @@ public class adventureGame {
         return new int[]{health, potion};
     }
 
+    public static boolean fight(Hero hero, Enemy enemy) {
+        Scanner sc = new Scanner(System.in);
+        while (hero.getHealth() > 0 && enemy.getHealth() > 0) {
+            System.out.println(hero.getName() + "'s Health: " + hero.getHealth() + ", Armor: " + hero.getArmor() + ", Potions: " + hero.getPotion());
+            System.out.println(enemy.getName() + "'s Health: " + enemy.getHealth() + ", Armor: " + enemy.getArmor());
+            System.out.println("Attack, Drink Potion, Run");
+            String choice = sc.nextLine();
+            if (choice.trim().equalsIgnoreCase("attack")) {
+                int[] updatedEnemyStats = hero.attack(enemy.getHealth(), enemy.getArmor());
+                System.out.println("You hit the enemy for: " + (updatedEnemyStats[2]));
+                enemy.setHealth(updatedEnemyStats[0]);
+                enemy.setArmor(updatedEnemyStats[1]);
+            } else if (choice.trim().equalsIgnoreCase("potion") || choice.trim().equalsIgnoreCase("drink potion")) {
+                int[] updatedHeroStats = drinkPotion(hero.getPotion(), hero.getHealth());
+                hero.setHealth(updatedHeroStats[0]);
+                hero.setPotion(updatedHeroStats[1]);
+            } else if (choice.trim().equalsIgnoreCase("run")) {
+                hero.setHealth(0);
+                System.out.println("                      ,____\n" +
+                        "                      |---.\\\n" +
+                        "              ___     |    `\n" +
+                        "             / .-\\  ./=)\n" +
+                        "            |  |\"|_/\\/|\n" +
+                        "            ;  |-;| /_|\n" +
+                        "           / \\_| |/ \\ |\n" +
+                        "          /      \\/\\( |\n" +
+                        "          |   /  |` ) |\n" +
+                        "          /   \\ _/    |\n" +
+                        "         /--._/  \\    |\n" +
+                        "         `/|)    |    /\n" +
+                        "           /     |   |\n" +
+                        "         .'      |   |\n" +
+                        "        /         \\  |\n" +
+                        "       (_.-.__.__./  /");
+                System.out.println("You are dead!");
+            } else {
+                continue;
+            }
+
+            int[] updatedHeroStats = enemy.attack(hero.getHealth(), hero.getArmor());
+            System.out.println("The enemy has hit you for: " + (updatedHeroStats[2]));
+            hero.setHealth(updatedHeroStats[0]);
+            hero.setArmor(updatedHeroStats[1]);
+
+        }
+        if (hero.getHealth() <= 0) {
+            return false;
+        } else {
+            return true;
+        }
+
+    }
+        public static void heroDeath () {
+            System.out.println("                      ,____\n" +
+                    "                      |---.\\\n" +
+                    "              ___     |    `\n" +
+                    "             / .-\\  ./=)\n" +
+                    "            |  |\"|_/\\/|\n" +
+                    "            ;  |-;| /_|\n" +
+                    "           / \\_| |/ \\ |\n" +
+                    "          /      \\/\\( |\n" +
+                    "          |   /  |` ) |\n" +
+                    "          /   \\ _/    |\n" +
+                    "         /--._/  \\    |\n" +
+                    "         `/|)    |    /\n" +
+                    "           /     |   |\n" +
+                    "         .'      |   |\n" +
+                    "        /         \\  |\n" +
+                    "       (_.-.__.__./  /");
+            System.out.println("You are dead!");
+            System.exit(0);
+        }
+
+        public static void heroDeath (String message){
+            System.out.println("                      ,____\n" +
+                    "                      |---.\\\n" +
+                    "              ___     |    `\n" +
+                    "             / .-\\  ./=)\n" +
+                    "            |  |\"|_/\\/|\n" +
+                    "            ;  |-;| /_|\n" +
+                    "           / \\_| |/ \\ |\n" +
+                    "          /      \\/\\( |\n" +
+                    "          |   /  |` ) |\n" +
+                    "          /   \\ _/    |\n" +
+                    "         /--._/  \\    |\n" +
+                    "         `/|)    |    /\n" +
+                    "           /     |   |\n" +
+                    "         .'      |   |\n" +
+                    "        /         \\  |\n" +
+                    "       (_.-.__.__./  /");
+            System.out.println(message);
+            System.exit(0);
+        }
+
+        public static void afterFightScreen(Hero hero,String message){
+            Scanner sc = new Scanner(System.in);
+            System.out.println("88.._|      | `-.  | `.  -_-_ _-_  _-  _- -_ -  .'|   |.'|     |  _..88\n" +
+                    "88   `-.._  |    |`!  |`.  -_ -__ -_ _- _-_-  .'  |.;'   |   _.!-'|  88\n" +
+                    "88      | `-!._  |  `;!  ;. _______________ ,'| .-' |   _!.i'     |  88\n" +
+                    "88..__  |     |`-!._ | `.| |_______________||.\"'|  _!.;'   |     _|..88\n" +
+                    "88   |``\"..__ |    |`\";.| i|_|MMMMMMMMMMM|_|'| _!-|   |   _|..-|'    88\n" +
+                    "88   |      |``--..|_ | `;!|l|MMoMMMMoMMM|1|.'j   |_..!-'|     |     88\n" +
+                    "88   |      |    |   |`-,!_|_|MMMMP'YMMMM|_||.!-;'  |    |     |     88\n" +
+                    "88___|______|____!.,.!,.!,!|d|MMMo * loMM|p|,!,.!.,.!..__|_____|_____88\n" +
+                    "88      |     |    |  |  | |_|MMMMb,dMMMM|_|| |   |   |    |      |  88\n" +
+                    "88      |     |    |..!-;'i|r|MPYMoMMMMoM|r| |`-..|   |    |      |  88\n" +
+                    "88      |    _!.-j'  | _!,\"|_|M)(MMMMoMMM|_||!._|  `i-!.._ |      |  88\n" +
+                    "88     _!.-'|    | _.\"|  !;|1|MbdMMoMMMMM|l|`.| `-._|    |``-.._  |  88\n" +
+                    "88..-i'     |  _.''|  !-| !|_|MMMoMMMMoMM|_|.|`-. | ``._ |     |``\"..88\n" +
+                    "88   |      |.|    |.|  !| |u|MoMMMMoMMMM|n||`. |`!   | `\".    |     88\n" +
+                    "88   |  _.-'  |  .'  |.' |/|_|MMMMoMMMMoM|_|! |`!  `,.|    |-._|     88\n" +
+                    "88  _!\"'|     !.'|  .'| .'|[@]MMMMMMMMMMM[@] \\|  `. | `._  |   `-._  88\n" +
+                    "88-'    |   .'   |.|  |/| /                 \\|`.  |`!    |.|      |`-88\n" +
+                    "88      |_.'|   .' | .' |/                   \\  \\ |  `.  | `._    |  88\n" +
+                    "88     .'   | .'   |/|  /                     \\ |`!   |`.|    `.  |  88\n" +
+                    "88  _.'     !'|   .' | /                       \\|  `  |  `.    |`.|  88");
+            System.out.println(message);
+            System.out.println("Would you like to check your current status?");
+            String statusCheck = sc.nextLine();
+            if (statusCheck.trim().equalsIgnoreCase("yes")) {
+                System.out.println(hero.getName() + "'s Health: " + hero.getHealth() + ", Armor: " + hero.getArmor() + ", Potions: " + hero.getPotion());
+            }
+            System.out.println("Drink a potion before proceeding?");
+            String potionCheck = sc.nextLine();
+            if (potionCheck.trim().equalsIgnoreCase("yes")) {
+                int[] updatedHeroStats = drinkPotion(hero.getPotion(), hero.getHealth());
+                hero.setHealth(updatedHeroStats[0]);
+                hero.setPotion(updatedHeroStats[1]);
+                System.out.println(hero.getName() + "'s Health: " + hero.getHealth() + ", Armor: " + hero.getArmor() + ", Potions: " + hero.getPotion());
+            }
+        }
 }
