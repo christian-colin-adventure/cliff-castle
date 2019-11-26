@@ -13,8 +13,23 @@ public class Hero {
     public void setClassAtt(String charClass){
         if(charClass.equals("Warrior")){
             this.setHealth(150);
+            this.setAttack(20);
+            this.setArmor(25);
+            this.setPotion(5);
+        } else if(charClass.equals("Paladin")) {
+            this.setHealth(120);
+            this.setAttack(30);
+            this.setArmor(30);
+            this.setPotion(3);
+        } else if(charClass.equals("Barbarian")) {
+            this.setHealth(225);
+            this.setAttack(40);
+            this.setArmor(0);
+            this.setPotion(0);
         }
     }
+
+
 
 
     public Hero(String name){
