@@ -5,57 +5,17 @@ public class CliffCastle {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        Random rand = new Random();
-
-        // Player attributes
-//        int heroHealth = 100;
-//        int heroArmor = 25;
-//        int heroAttack = 25;
-//        int heroPotion = 5;
-//        boolean wearingHelm = false;
-
         Hero hero = new Hero("Hero");
         hero.setClassAtt("Warrior");
-
-        // CPU attributes
-//        int actualCannibalLaBeoufHealth = 50;
-//        int actualCannibalLaBeoufArmor = 0;
-//        int actualCannibalLaBeoufAttack = 10;
-//        String actualCannibalLaBeoufName = "The Cannibal";
+        hero.checkName();
 
         Enemy actualCannibalLaBeouf = new Enemy(50, 0, 10, "The Cannibal");
 
-        // CPU attributes
-//        int darkKnightHealth = 100;
-//        int darkKnightArmor = 25;
-//        int darkKnightAttack = 15;
-//        String darkKnightName = "Death Knight";
-
         Enemy darkKnight = new Enemy(100, 25, 15, "Death Knight");
-
-
-        // CPU attributes
-//        int vampireLordHealth = 200;
-//        int vampireLordArmor = 50;
-//        int vampireLordAttack = 20;
-//        String vampireLordName = "Lord of the Castle";
 
         Enemy vampireLord = new Enemy(200, 50, 20, "Lord of The Castle");
 
-
-        // CPU attributes
-//        int dragonHealth = 300;
-//        int dragonArmor = 0;
-//        int dragonAttack = 25;
-//        String dragonName = "Dragon";
-
         Enemy dragon = new Enemy(300, 0, 25, "Dragon");
-
-
-
-
-        String heroName = "";
-
 
         System.out.println("          <|\n" +
                 "           A             \n" +
@@ -89,12 +49,7 @@ public class CliffCastle {
 
         if (userResponse.trim().equalsIgnoreCase("yes")) {
             System.out.println("You are a hero of great standing in the local village, but what is your name?");
-            heroName = sc.nextLine();
-            if (heroName.trim().equalsIgnoreCase("cheater")) {
-                hero.setHealth(10000);
-                hero.setArmor(10000);
-                hero.setAttack(10000);
-            }
+            hero.setName(sc.nextLine());
             System.out.println("                             ___\n" +
                     "                            / : \\\n" +
                     "                            |===|\n" +
@@ -146,24 +101,7 @@ public class CliffCastle {
                     "        ().'`       `'.()");
             System.out.println("Before you lays a man with a cauldron, there are arms and legs of his victims spinning around as he mixes.\n He looks up at you and says \"You look delicious!\" You know you must battle the actual cannibal!");
         } else {
-            System.out.println("You have slipped and fell off the cliff, You have died!");
-            System.out.println("                      ,____\n" +
-                    "                      |---.\\\n" +
-                    "              ___     |    `\n" +
-                    "             / .-\\  ./=)\n" +
-                    "            |  |\"|_/\\/|\n" +
-                    "            ;  |-;| /_|\n" +
-                    "           / \\_| |/ \\ |\n" +
-                    "          /      \\/\\( |\n" +
-                    "          |   /  |` ) |\n" +
-                    "          /   \\ _/    |\n" +
-                    "         /--._/  \\    |\n" +
-                    "         `/|)    |    /\n" +
-                    "           /     |   |\n" +
-                    "         .'      |   |\n" +
-                    "        /         \\  |\n" +
-                    "       (_.-.__.__./  /");
-            System.exit(0);
+            heroDeath("You have slipped and fell off the cliff, You have died!");
         }
 
         boolean fightResult1 = fight(hero, actualCannibalLaBeouf);
@@ -345,7 +283,7 @@ public class CliffCastle {
                             "   ~  ~~     ~         ~      ~~~~~~  ~~ ~~~       ~~ ~ ~~  ~~ ~\n" +
                             " ~  ~       ~ ~      ~           ~~ ~~~~~~  ~      ~~  ~             ~~\n" +
                             "       ~             ~        ~      ~      ~~   ~             ~");
-                    System.out.printf("You have defeated your enemies and the castle lays empty. You have earned your place as lord of the castle.\n The treasure is yours, the throne is yours. All hail Lord %s\n\n", heroName);
+                    System.out.printf("You have defeated your enemies and the castle lays empty. You have earned your place as lord of the castle.\n The treasure is yours, the throne is yours. All hail Lord %s\n\n", hero.getName());
                     if (hero.isWearingHelm()) {
                         System.out.println("Caliburn whispers to you. \"You must toss the cursed helmet to sea or you'll never be free.\"");
                         System.out.println("Do you want to throw the helmet?");
@@ -388,7 +326,7 @@ public class CliffCastle {
                                         "  \\  )   /   \\   (  /\n" +
                                         "   )/   /     \\   \\(\n" +
                                         "   '    `-`-'-'    `");
-                                System.out.printf("\"You have defeated a great evil today and have earned our divine gratitude.\nLive the rest of your days in your castle.\nWell see you when you pass to the next realm, Great Hero %s\"", heroName);
+                                System.out.printf("\"You have defeated a great evil today and have earned our divine gratitude.\nLive the rest of your days in your castle.\nWell see you when you pass to the next realm, Great Hero %s\"", hero.getName());
                                 System.exit(0);
                             }
                         } else {
@@ -551,34 +489,11 @@ public class CliffCastle {
                             "   ~  ~~     ~         ~      ~~~~~~  ~~ ~~~       ~~ ~ ~~  ~~ ~\n" +
                             " ~  ~       ~ ~      ~           ~~ ~~~~~~  ~      ~~  ~             ~~\n" +
                             "       ~             ~        ~      ~      ~~   ~             ~");
-                    System.out.printf("You have defeated your enemies and the castle lays empty. You have earned your place as lord of the castle.\n The treasure is yours, the throne is yours. All hail Lord %s", heroName);
+                    System.out.printf("You have defeated your enemies and the castle lays empty. You have earned your place as lord of the castle.\n The treasure is yours, the throne is yours. All hail Lord %s", hero.getName());
 
                 }
             }
         }
-
-
-
-//    public static int[] attack(int health, int armor, int maxDamage) {
-//        Random rand = new Random();
-//        // Health and armor is going to equal opposition health and armor.
-//        // Attack points is going to be whoever is attacking.
-//        int hit;
-//        if (maxDamage > 40) {
-//
-//            hit = rand.nextInt(maxDamage - 15) + 15;
-//        } else
-//            hit = rand.nextInt(maxDamage);
-//
-//        if (armor >= hit) {
-//            armor = armor - hit;
-//        } else {
-//            health -= (hit - armor);
-//            armor = 0;
-//        }
-//
-//        return new int[]{health, armor, hit};
-//    }
 
     public static int[] drinkPotion(int potion, int health) {
 
