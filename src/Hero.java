@@ -10,6 +10,19 @@ public class Hero {
     private String name;
     private boolean wearingHelm = false;
 
+    private void cheater() {
+        if (this.name.equalsIgnoreCase("cheater")) {
+            this.setHealth(10000);
+            this.setArmor(10000);
+            this.setAttack(10000);
+        }
+    }
+    public void checkName(){
+            if (this.name.equalsIgnoreCase("cheater")) {
+            cheater();
+            }
+    }
+
     public void setClassAtt(String charClass){
         if(charClass.equals("Warrior")){
             this.setHealth(150);
