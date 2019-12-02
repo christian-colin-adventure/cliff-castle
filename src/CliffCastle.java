@@ -5,9 +5,16 @@ public class CliffCastle {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
+        //Class selection phase and naming
+
         Hero hero = new Hero("Hero");
         hero.setClassAtt("Warrior");
+        hero.setClassAtt("Paladin");
+        hero.setClassAtt("Barbarian");
+
         hero.checkName();
+
+        //enemies
 
         Enemy actualCannibalLaBeouf = new Enemy(50, 0, 10, "The Cannibal");
 
@@ -46,6 +53,9 @@ public class CliffCastle {
         System.out.println("You see a castle in the distance, something tells you there is treasure and adventure\n");
         System.out.println("Are you ready to start the game? yes or no");
         String userResponse = sc.nextLine();
+
+        System.out.println("Choose your class");
+        hero.setClassAtt(sc.nextLine());
 
         if (userResponse.trim().equalsIgnoreCase("yes")) {
             System.out.println("You are a hero of great standing in the local village, but what is your name?");
@@ -321,7 +331,7 @@ public class CliffCastle {
                                         " /      \\/'_`\\/      \\\n" +
                                         "|       /_(_)_\\       |\n" +
                                         "|     _(/(\\_/)\\)_     |\n" +
-                                        "|    / // \\ / \\\\ \\    |\n" +
+                                        "|    / // \\yes / \\\\ \\    |\n" +
                                         " \\  | ``  / \\ ''  |  /\n" +
                                         "  \\  )   /   \\   (  /\n" +
                                         "   )/   /     \\   \\(\n" +
