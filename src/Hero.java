@@ -7,6 +7,9 @@ public class Hero {
     private int Armor = 25;
     private int Attack = 25;
     private int Potion = 5;
+    private static int enemyhp;
+    private static int enemymeleedmg;
+    private static int Level;
     private String name;
     private boolean wearingHelm = false;
 
@@ -29,20 +32,28 @@ public class Hero {
             this.setAttack(20);
             this.setArmor(25);
             this.setPotion(5);
+            Level = 1;
         } else if(charClass.equals("Paladin")) {
             this.setHealth(120);
             this.setAttack(30);
             this.setArmor(30);
             this.setPotion(3);
+            Level = 1;
         } else if(charClass.equals("Barbarian")) {
             this.setHealth(225);
             this.setAttack(40);
             this.setArmor(0);
             this.setPotion(0);
+            Level = 1;
         }
     }
 
+    // TODO: Make enemies random enemies and make stronger versions of them when player levels up
 
+//    int[] enemyHpArray = {1, 9, 19, 24, 32, 40};
+//    int[] enemyMeleedmgArray = {1, 1, 4, 6, 7, 9};
+//    enemyhp = enemyHpArray[Level];
+//    enemymeleedmg = enemyMeleedmgArray[Level];
 
 
     public Hero(String name){

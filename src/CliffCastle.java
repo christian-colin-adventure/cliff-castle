@@ -1,21 +1,27 @@
-import java.util.Random;
 import java.util.Scanner;
 
 public class CliffCastle {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
+        //Class selection phase and naming
+
         Hero hero = new Hero("Hero");
         hero.setClassAtt("Warrior");
+        hero.setClassAtt("Paladin");
+        hero.setClassAtt("Barbarian");
+
         hero.checkName();
 
-        Enemy actualCannibalLaBeouf = new Enemy(50, 0, 10, "The Cannibal");
+        //enemies
 
-        Enemy darkKnight = new Enemy(100, 25, 15, "Death Knight");
+        Enemies actualCannibalLaBeouf = new Enemies(50, 0, 10, "The Cannibal");
 
-        Enemy vampireLord = new Enemy(200, 50, 20, "Lord of The Castle");
+        Enemies darkKnight = new Enemies(100, 25, 15, "Death Knight");
 
-        Enemy dragon = new Enemy(300, 0, 25, "Dragon");
+        Enemies vampireLord = new Enemies(200, 50, 20, "Lord of The Castle");
+
+        Enemies dragon = new Enemies(300, 0, 25, "Dragon");
 
         System.out.println("          <|\n" +
                 "           A             \n" +
@@ -46,6 +52,9 @@ public class CliffCastle {
         System.out.println("You see a castle in the distance, something tells you there is treasure and adventure\n");
         System.out.println("Are you ready to start the game? yes or no");
         String userResponse = sc.nextLine();
+
+        System.out.println("Choose your class");
+        hero.setClassAtt(sc.nextLine());
 
         if (userResponse.trim().equalsIgnoreCase("yes")) {
             System.out.println("You are a hero of great standing in the local village, but what is your name?");
@@ -321,7 +330,7 @@ public class CliffCastle {
                                         " /      \\/'_`\\/      \\\n" +
                                         "|       /_(_)_\\       |\n" +
                                         "|     _(/(\\_/)\\)_     |\n" +
-                                        "|    / // \\ / \\\\ \\    |\n" +
+                                        "|    / // \\yes / \\\\ \\    |\n" +
                                         " \\  | ``  / \\ ''  |  /\n" +
                                         "  \\  )   /   \\   (  /\n" +
                                         "   )/   /     \\   \\(\n" +
@@ -508,18 +517,18 @@ public class CliffCastle {
         return new int[]{health, potion};
     }
 
-    public static boolean fight(Hero hero, Enemy enemy) {
+    public static boolean fight(Hero hero, Enemies enemies) {
         Scanner sc = new Scanner(System.in);
-        while (hero.getHealth() > 0 && enemy.getHealth() > 0) {
+        while (hero.getHealth() > 0 && enemies.getHealth() > 0) {
             System.out.println(hero.getName() + "'s Health: " + hero.getHealth() + ", Armor: " + hero.getArmor() + ", Potions: " + hero.getPotion());
-            System.out.println(enemy.getName() + "'s Health: " + enemy.getHealth() + ", Armor: " + enemy.getArmor());
+            System.out.println(enemies.getName() + "'s Health: " + enemies.getHealth() + ", Armor: " + enemies.getArmor());
             System.out.println("Attack, Drink Potion, Run");
             String choice = sc.nextLine();
             if (choice.trim().equalsIgnoreCase("attack")) {
-                int[] updatedEnemyStats = hero.attack(enemy.getHealth(), enemy.getArmor());
+                int[] updatedEnemyStats = hero.attack(enemies.getHealth(), enemies.getArmor());
                 System.out.println("You hit the enemy for: " + (updatedEnemyStats[2]));
-                enemy.setHealth(updatedEnemyStats[0]);
-                enemy.setArmor(updatedEnemyStats[1]);
+                enemies.setHealth(updatedEnemyStats[0]);
+                enemies.setArmor(updatedEnemyStats[1]);
             } else if (choice.trim().equalsIgnoreCase("potion") || choice.trim().equalsIgnoreCase("drink potion")) {
                 int[] updatedHeroStats = drinkPotion(hero.getPotion(), hero.getHealth());
                 hero.setHealth(updatedHeroStats[0]);
@@ -547,7 +556,7 @@ public class CliffCastle {
                 continue;
             }
 
-            int[] updatedHeroStats = enemy.attack(hero.getHealth(), hero.getArmor());
+            int[] updatedHeroStats = enemies.attack(hero.getHealth(), hero.getArmor());
             System.out.println("The enemy has hit you for: " + (updatedHeroStats[2]));
             hero.setHealth(updatedHeroStats[0]);
             hero.setArmor(updatedHeroStats[1]);
