@@ -7,6 +7,7 @@ public class Hero {
     private int Armor = 25;
     private int Attack = 25;
     private int Potion = 5;
+    private int MovementSpeed; // this is paces per move
     private static int enemyhp;
     private static int enemymeleedmg;
     private static int Level;
@@ -17,6 +18,7 @@ public class Hero {
             this.setHealth(10000);
             this.setArmor(10000);
             this.setAttack(10000);
+            this.setMovementSpeed(10000);
     }
     public void checkName(){
             if (this.name.trim().equalsIgnoreCase("cheater")) {
@@ -30,18 +32,21 @@ public class Hero {
             this.setAttack(20);
             this.setArmor(25);
             this.setPotion(5);
+            this.setMovementSpeed(7);
             Level = 1;
         } else if(charClass.equals("Paladin")) {
             this.setHealth(120);
             this.setAttack(30);
             this.setArmor(30);
             this.setPotion(3);
+            this.setMovementSpeed(7);
             Level = 1;
         } else if(charClass.equals("Barbarian")) {
             this.setHealth(225);
             this.setAttack(40);
             this.setArmor(0);
             this.setPotion(0);
+            this.setMovementSpeed(5);
             Level = 1;
         }
     }
@@ -101,6 +106,14 @@ public class Hero {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getMovementSpeed() {
+        return MovementSpeed;
+    }
+
+    public void setMovementSpeed(int movementSpeed) {
+        MovementSpeed = movementSpeed;
     }
 
     public void setWearingHelm(boolean wearingHelm) {

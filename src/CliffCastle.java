@@ -1,3 +1,4 @@
+import java.util.Random;
 import java.util.Scanner;
 
 public class CliffCastle {
@@ -11,52 +12,20 @@ public class CliffCastle {
         hero.setClassAtt("Paladin");
         hero.setClassAtt("Barbarian");
 
-        hero.checkName();
-
         //enemies
 
-        Enemies actualCannibalLaBeouf = new Enemies(50, 0, 10, "The Cannibal");
+        Enemies actualCannibalLaBeouf = new Enemies(50, 0, 10, 0 ,"The Cannibal");
 
-        Enemies darkKnight = new Enemies(100, 25, 15, "Death Knight");
+        Enemies darkKnight = new Enemies(100, 25, 15, 0 ,"Death Knight");
 
-        Enemies vampireLord = new Enemies(200, 50, 20, "Lord of The Castle");
+        Enemies vampireLord = new Enemies(200, 50, 20, 0 ,"Lord of The Castle");
 
-        Enemies dragon = new Enemies(300, 0, 25, "Dragon");
+        Enemies dragon = new Enemies(300, 0, 25, 0 ,"Dragon");
+
+        Enemies archer = new Enemies(75,25, 5, 20, "Dark Archer");
 
 
-        System.out.println("         |\n" +
-                "                                                     \\.\n" +
-                "                                                     /|.\n" +
-                "                                                   /  `|.\n" +
-                "                                                 /     |.\n" +
-                "                                               /       |.\n" +
-                "                                             /         |.\n" +
-                "                                           /           |.\n" +
-                "                                         /             `|.\n" +
-                "                                       /                |.\n" +
-                "                                      /                  |.\n" +
-                "                                    /                    |.\n" +
-                "                                  /                      |\\\n" +
-                "              \\#####\\           /                        ||\n" +
-                "            ###########>      /                          ||\n" +
-                "           \\##==      \\    /                            ||\n" +
-                "      ______ =       =|__/___                           ||\n" +
-                "  ,--' ,----`-,__ ___/'  --,-`-=========================##==========>\n" +
-                " \\               '        ##_______ ______   ______,-_,=##,__\n" +
-                "  `,    __==    ___,-,__,--'#'  ==='      `-'         | ##,-/\n" +
-                "    `-,____,---'       \\####\\              |        --\\_##,/\n" +
-                "        #_              |##   \\  _____,---==,__,---'    ##\n" +
-                "         #              ]===--==\\                       ||\n" +
-                "         #,             ]         \\                     ||\n" +
-                "          #_            |           \\                   ||\n" +
-                "           ##_       __/'             \\                 ||\n" +
-                "            ####='     |                \\               |/\n" +
-                "            ###=======]                   \\             |.\n" +
-                "           ///        |                      \\         ,|.\n" +
-                "           //         |                         \\      |.\n" +
-                "                                                   \\  ,|.\n" +
-                "                                                     \\ |.\n" +
-                "                                                       /.\n");
+
 
 
 
@@ -132,6 +101,46 @@ public class CliffCastle {
         System.out.println("You must now approach the castle, the walk is long and has many turns and almost twist your ankle when you slip off of one of the rocks.\n However you've made it. Do you want to cross the drawbridge?");
         String drawBridgeChoice = sc.nextLine();
         if (drawBridgeChoice.trim().equalsIgnoreCase("yes")) {
+            System.out.println("         |\n" +
+                    "                                                     \\.\n" +
+                    "                                                     /|.\n" +
+                    "                                                   /  `|.\n" +
+                    "                                                 /     |.\n" +
+                    "                                               /       |.\n" +
+                    "                                             /         |.\n" +
+                    "                                           /           |.\n" +
+                    "                                         /             `|.\n" +
+                    "                                       /                |.\n" +
+                    "                                      /                  |.\n" +
+                    "                                    /                    |.\n" +
+                    "                                  /                      |\\\n" +
+                    "              \\#####\\           /                        ||\n" +
+                    "            ###########>      /                          ||\n" +
+                    "           \\##==      \\    /                            ||\n" +
+                    "      ______ =       =|__/___                           ||\n" +
+                    "  ,--' ,----`-,__ ___/'  --,-`-=========================##==========>\n" +
+                    " \\               '        ##_______ ______   ______,-_,=##,__\n" +
+                    "  `,    __==    ___,-,__,--'#'  ==='      `-'         | ##,-/\n" +
+                    "    `-,____,---'       \\####\\              |        --\\_##,/\n" +
+                    "        #_              |##   \\  _____,---==,__,---'    ##\n" +
+                    "         #              ]===--==\\                       ||\n" +
+                    "         #,             ]         \\                     ||\n" +
+                    "          #_            |           \\                   ||\n" +
+                    "           ##_       __/'             \\                 ||\n" +
+                    "            ####='     |                \\               |/\n" +
+                    "            ###=======]                   \\             |.\n" +
+                    "           ///        |                      \\         ,|.\n" +
+                    "           //         |                         \\      |.\n" +
+                    "                                                   \\  ,|.\n" +
+                    "                                                     \\ |.\n" +
+                    "                                                       /.\n");
+            System.out.println("You must fight an archer!");
+            boolean fightResultRangeTest = rangedFight(hero, archer,50);
+            if (!fightResultRangeTest) {
+                heroDeath();
+            } else {
+                afterFightScreen(hero, "You have defeated the Archer, as he lays mortally wounded he whispers to you \"Caliburn...\", his cauldron now grows colder has you proceed into the castle. \n");
+            }
             System.out.println("                           .-.\n" +
                     "                              \\\\\\V/// (o.o)\n" +
                     "                              #######  |=|\n" +
@@ -558,6 +567,8 @@ public class CliffCastle {
         return new int[]{health, potion};
     }
 
+//    This method is for fights between two melee fighters with no range
+
     public static boolean fight(Hero hero, Enemies enemies) {
         Scanner sc = new Scanner(System.in);
         while (hero.getHealth() > 0 && enemies.getHealth() > 0) {
@@ -597,70 +608,60 @@ public class CliffCastle {
                 continue;
             }
 
-            int[] updatedHeroStats = enemies.attack(hero.getHealth(), hero.getArmor());
+            int[] updatedHeroStats = enemies.meleeAttack(hero.getHealth(), hero.getArmor());
             System.out.println("The enemy has hit you for: " + (updatedHeroStats[2]));
             hero.setHealth(updatedHeroStats[0]);
             hero.setArmor(updatedHeroStats[1]);
 
         }
-        if (hero.getHealth() <= 0) {
-            return false;
-        } else {
-            return true;
-        }
+        return hero.getHealth() > 0;
 
     }
 
-    public static boolean rangedFight(Hero hero, Enemy enemy,int enemyDistance) {
+//    this fight takes place if either the enemy or the hero has ranged combat capabilities
+
+    public static boolean rangedFight(Hero hero, Enemies enemy,int enemyDistance) {
         Scanner sc = new Scanner(System.in);
-        while (hero.getHealth() > 0 && enemy.getHealth() > 0) {
+        Random random = new Random();
+        int currentDistance = enemyDistance;
+        while(currentDistance > 0 ){
             System.out.println(hero.getName() + "'s Health: " + hero.getHealth() + ", Armor: " + hero.getArmor() + ", Potions: " + hero.getPotion());
             System.out.println(enemy.getName() + "'s Health: " + enemy.getHealth() + ", Armor: " + enemy.getArmor());
-            System.out.println("Attack, Drink Potion, Run");
+            System.out.printf("The enemy is current %d paces away!%n",currentDistance);
+            System.out.println("Move in, Defend, Run");
             String choice = sc.nextLine();
-            if (choice.trim().equalsIgnoreCase("attack")) {
-                int[] updatedEnemyStats = hero.attack(enemy.getHealth(), enemy.getArmor());
-                System.out.println("You hit the enemy for: " + (updatedEnemyStats[2]));
-                enemy.setHealth(updatedEnemyStats[0]);
-                enemy.setArmor(updatedEnemyStats[1]);
-            } else if (choice.trim().equalsIgnoreCase("potion") || choice.trim().equalsIgnoreCase("drink potion")) {
-                int[] updatedHeroStats = drinkPotion(hero.getPotion(), hero.getHealth());
+            if(choice.equalsIgnoreCase("move in")){
+                currentDistance -= hero.getMovementSpeed();
+                int[] updatedHeroStats = enemy.rangeAttack(hero.getHealth(),hero.getArmor());
                 hero.setHealth(updatedHeroStats[0]);
-                hero.setPotion(updatedHeroStats[1]);
-            } else if (choice.trim().equalsIgnoreCase("run")) {
-                hero.setHealth(0);
-                System.out.println("                      ,____\n" +
-                        "                      |---.\\\n" +
-                        "              ___     |    `\n" +
-                        "             / .-\\  ./=)\n" +
-                        "            |  |\"|_/\\/|\n" +
-                        "            ;  |-;| /_|\n" +
-                        "           / \\_| |/ \\ |\n" +
-                        "          /      \\/\\( |\n" +
-                        "          |   /  |` ) |\n" +
-                        "          /   \\ _/    |\n" +
-                        "         /--._/  \\    |\n" +
-                        "         `/|)    |    /\n" +
-                        "           /     |   |\n" +
-                        "         .'      |   |\n" +
-                        "        /         \\  |\n" +
-                        "       (_.-.__.__./  /");
-                System.out.println("You are dead!");
-            } else {
-                continue;
+                hero.setArmor(updatedHeroStats[1]);
+                System.out.printf("The arrow hits you for %d damage!%n",updatedHeroStats[2]);
+                System.out.printf("You move up %d paces!%n",hero.getMovementSpeed());
+            }else if(choice.equalsIgnoreCase("defend")){
+                int dodge = random.nextInt(4)+1;
+                int halfSpeed = hero.getMovementSpeed()/2;
+                currentDistance -= halfSpeed;
+                if (dodge > 2){
+                    System.out.println("The arrow misses you!");
+                    System.out.printf("You move up %d paces.%n",halfSpeed);
+                }
+                else{
+                    int[] updatedHeroStats = enemy.rangeAttack(hero.getHealth(),hero.getArmor());
+                    hero.setHealth(updatedHeroStats[0]);
+                    hero.setArmor(updatedHeroStats[1]);
+                    System.out.printf("The arrow hits you for %d damage!",updatedHeroStats[2]);
+                    System.out.printf("You move up %d paces.\n",halfSpeed);
+                }
+            }else if(choice.equalsIgnoreCase("run")){
+                System.out.println("You can't run away!");
+            }else{
+                System.out.printf("I don't know how to %s.%n",choice);
             }
-
-            int[] updatedHeroStats = enemy.attack(hero.getHealth(), hero.getArmor());
-            System.out.println("The enemy has hit you for: " + (updatedHeroStats[2]));
-            hero.setHealth(updatedHeroStats[0]);
-            hero.setArmor(updatedHeroStats[1]);
-
         }
-        if (hero.getHealth() <= 0) {
-            return false;
-        } else {
-            return true;
+        if(hero.getHealth() < 1){
+            heroDeath();
         }
+        return fight(hero,enemy);
 
     }
 
