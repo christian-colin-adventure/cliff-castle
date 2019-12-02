@@ -13,7 +13,12 @@ public class Enemies {
     private String name;
 
 
+
     // TODO: Make enemies random enemies and make stronger versions of them when player levels up
+
+    private static String[] enemyHpArray = {"1", "10", "20", "30", "40", "50"};
+
+    private static String[] enemyMeleedmgArray = {"1", "7", "11", "17", "20", "24"};
 
 //    int[] enemyHpArray = {1, 9, 19, 24, 32, 40};
 //    int[] enemyMeleedmgArray = {1, 1, 4, 6, 7, 9};

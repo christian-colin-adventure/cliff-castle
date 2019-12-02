@@ -12,7 +12,7 @@ public class CliffCastle {
         hero.setClassAtt("Paladin");
         hero.setClassAtt("Barbarian");
 
-        //enemies
+        //BOSS ENEMIES
 
         Enemies actualCannibalLaBeouf = new Enemies(50, 0, 10, 0 ,"The Cannibal");
 
