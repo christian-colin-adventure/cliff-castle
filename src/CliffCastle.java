@@ -17,6 +17,46 @@ public class CliffCastle {
 
         Enemy dragon = new Enemy(300, 0, 25, "Dragon");
 
+
+        System.out.println("         |\n" +
+                "                                                     \\.\n" +
+                "                                                     /|.\n" +
+                "                                                   /  `|.\n" +
+                "                                                 /     |.\n" +
+                "                                               /       |.\n" +
+                "                                             /         |.\n" +
+                "                                           /           |.\n" +
+                "                                         /             `|.\n" +
+                "                                       /                |.\n" +
+                "                                      /                  |.\n" +
+                "                                    /                    |.\n" +
+                "                                  /                      |\\\n" +
+                "              \\#####\\           /                        ||\n" +
+                "            ###########>      /                          ||\n" +
+                "           \\##==      \\    /                            ||\n" +
+                "      ______ =       =|__/___                           ||\n" +
+                "  ,--' ,----`-,__ ___/'  --,-`-=========================##==========>\n" +
+                " \\               '        ##_______ ______   ______,-_,=##,__\n" +
+                "  `,    __==    ___,-,__,--'#'  ==='      `-'         | ##,-/\n" +
+                "    `-,____,---'       \\####\\              |        --\\_##,/\n" +
+                "        #_              |##   \\  _____,---==,__,---'    ##\n" +
+                "         #              ]===--==\\                       ||\n" +
+                "         #,             ]         \\                     ||\n" +
+                "          #_            |           \\                   ||\n" +
+                "           ##_       __/'             \\                 ||\n" +
+                "            ####='     |                \\               |/\n" +
+                "            ###=======]                   \\             |.\n" +
+                "           ///        |                      \\         ,|.\n" +
+                "           //         |                         \\      |.\n" +
+                "                                                   \\  ,|.\n" +
+                "                                                     \\ |.\n" +
+                "                                                       /.\n");
+
+
+
+
+
+
         System.out.println("          <|\n" +
                 "           A             \n" +
                 "          /.\\       \n" +
@@ -50,6 +90,7 @@ public class CliffCastle {
         if (userResponse.trim().equalsIgnoreCase("yes")) {
             System.out.println("You are a hero of great standing in the local village, but what is your name?");
             hero.setName(sc.nextLine());
+            hero.checkName();
             System.out.println("                             ___\n" +
                     "                            / : \\\n" +
                     "                            |===|\n" +
@@ -560,6 +601,60 @@ public class CliffCastle {
         }
 
     }
+
+    public static boolean rangedFight(Hero hero, Enemy enemy,int enemyDistance) {
+        Scanner sc = new Scanner(System.in);
+        while (hero.getHealth() > 0 && enemy.getHealth() > 0) {
+            System.out.println(hero.getName() + "'s Health: " + hero.getHealth() + ", Armor: " + hero.getArmor() + ", Potions: " + hero.getPotion());
+            System.out.println(enemy.getName() + "'s Health: " + enemy.getHealth() + ", Armor: " + enemy.getArmor());
+            System.out.println("Attack, Drink Potion, Run");
+            String choice = sc.nextLine();
+            if (choice.trim().equalsIgnoreCase("attack")) {
+                int[] updatedEnemyStats = hero.attack(enemy.getHealth(), enemy.getArmor());
+                System.out.println("You hit the enemy for: " + (updatedEnemyStats[2]));
+                enemy.setHealth(updatedEnemyStats[0]);
+                enemy.setArmor(updatedEnemyStats[1]);
+            } else if (choice.trim().equalsIgnoreCase("potion") || choice.trim().equalsIgnoreCase("drink potion")) {
+                int[] updatedHeroStats = drinkPotion(hero.getPotion(), hero.getHealth());
+                hero.setHealth(updatedHeroStats[0]);
+                hero.setPotion(updatedHeroStats[1]);
+            } else if (choice.trim().equalsIgnoreCase("run")) {
+                hero.setHealth(0);
+                System.out.println("                      ,____\n" +
+                        "                      |---.\\\n" +
+                        "              ___     |    `\n" +
+                        "             / .-\\  ./=)\n" +
+                        "            |  |\"|_/\\/|\n" +
+                        "            ;  |-;| /_|\n" +
+                        "           / \\_| |/ \\ |\n" +
+                        "          /      \\/\\( |\n" +
+                        "          |   /  |` ) |\n" +
+                        "          /   \\ _/    |\n" +
+                        "         /--._/  \\    |\n" +
+                        "         `/|)    |    /\n" +
+                        "           /     |   |\n" +
+                        "         .'      |   |\n" +
+                        "        /         \\  |\n" +
+                        "       (_.-.__.__./  /");
+                System.out.println("You are dead!");
+            } else {
+                continue;
+            }
+
+            int[] updatedHeroStats = enemy.attack(hero.getHealth(), hero.getArmor());
+            System.out.println("The enemy has hit you for: " + (updatedHeroStats[2]));
+            hero.setHealth(updatedHeroStats[0]);
+            hero.setArmor(updatedHeroStats[1]);
+
+        }
+        if (hero.getHealth() <= 0) {
+            return false;
+        } else {
+            return true;
+        }
+
+    }
+
         public static void heroDeath () {
             System.out.println("                      ,____\n" +
                     "                      |---.\\\n" +
