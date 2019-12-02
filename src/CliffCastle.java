@@ -1,9 +1,11 @@
+import java.text.DecimalFormat;
 import java.util.Random;
 import java.util.Scanner;
 
 public class CliffCastle {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        DecimalFormat df = new DecimalFormat("#,###,##0");
 
         //Class selection phase and naming
 
@@ -278,9 +280,8 @@ public class CliffCastle {
                         System.out.println("You see a helmet, it looks better than the one you are currently wearing however it is glowing strangely, do you want to wear it?");
                         String helmetChoice = sc.nextLine();
                         if (helmetChoice.trim().equalsIgnoreCase("yes")) {
-                            hero.setWearingHelm(true);
+                            hero.setHeadSlot(Equipment.cursedHelm);
                             System.out.println("You feel more protected!");
-                            hero.increaseArmor(50);
                         } else if (helmetChoice.trim().equalsIgnoreCase("no")) {
                             System.out.println("You walk away...");
                         }
@@ -343,7 +344,7 @@ public class CliffCastle {
                             " ~  ~       ~ ~      ~           ~~ ~~~~~~  ~      ~~  ~             ~~\n" +
                             "       ~             ~        ~      ~      ~~   ~             ~");
                     System.out.printf("You have defeated your enemies and the castle lays empty. You have earned your place as lord of the castle.\n The treasure is yours, the throne is yours. All hail Lord %s\n\n", hero.getName());
-                    if (hero.isWearingHelm()) {
+                    if (hero.getHeadSlot().getName().equalsIgnoreCase("Bright Helmet")) {
                         System.out.println("Caliburn whispers to you. \"You must toss the cursed helmet to sea or you'll never be free.\"");
                         System.out.println("Do you want to throw the helmet?");
                         String helmThrow = sc.nextLine();
@@ -486,7 +487,7 @@ public class CliffCastle {
                         String helmetChoice = sc.nextLine();
                         if (helmetChoice.trim().equalsIgnoreCase("yes")) {
                             System.out.println("You feel more protected!");
-                            hero.increaseArmor(50);
+                            hero.setHeadSlot(Equipment.cursedHelm);
                         } else if (helmetChoice.trim().equalsIgnoreCase("no")) {
                             System.out.println("You walk away...");
                         }
@@ -572,7 +573,7 @@ public class CliffCastle {
     public static boolean fight(Hero hero, Enemies enemies) {
         Scanner sc = new Scanner(System.in);
         while (hero.getHealth() > 0 && enemies.getHealth() > 0) {
-            System.out.println(hero.getName() + "'s Health: " + hero.getHealth() + ", Armor: " + hero.getArmor() + ", Potions: " + hero.getPotion());
+            System.out.println(hero.getName() + "'s Health: " + hero.getHealth() +", Potions: " + hero.getPotion());
             System.out.println(enemies.getName() + "'s Health: " + enemies.getHealth() + ", Armor: " + enemies.getArmor());
             System.out.println("Attack, Drink Potion, Run");
             String choice = sc.nextLine();
@@ -608,11 +609,9 @@ public class CliffCastle {
                 continue;
             }
 
-            int[] updatedHeroStats = enemies.meleeAttack(hero.getHealth(), hero.getArmor());
-            System.out.println("The enemy has hit you for: " + (updatedHeroStats[2]));
-            hero.setHealth(updatedHeroStats[0]);
-            hero.setArmor(updatedHeroStats[1]);
-
+            double[] updatedHeroStats = enemies.meleeAttack(hero.getHealth(), hero.getArmorRating());
+            System.out.println("The enemy has hit you for: " + (updatedHeroStats[1]));
+            hero.setHealth((int) updatedHeroStats[0]);
         }
         return hero.getHealth() > 0;
 
@@ -622,20 +621,20 @@ public class CliffCastle {
 
     public static boolean rangedFight(Hero hero, Enemies enemy,int enemyDistance) {
         Scanner sc = new Scanner(System.in);
+        DecimalFormat df = new DecimalFormat("#,###,##0");
         Random random = new Random();
         int currentDistance = enemyDistance;
         while(currentDistance > 0 ){
-            System.out.println(hero.getName() + "'s Health: " + hero.getHealth() + ", Armor: " + hero.getArmor() + ", Potions: " + hero.getPotion());
+            System.out.println(hero.getName() + "'s Health: " + hero.getHealth() +", Potions: " + hero.getPotion());
             System.out.println(enemy.getName() + "'s Health: " + enemy.getHealth() + ", Armor: " + enemy.getArmor());
             System.out.printf("The enemy is current %d paces away!%n",currentDistance);
             System.out.println("Move in, Defend, Run");
             String choice = sc.nextLine();
             if(choice.equalsIgnoreCase("move in")){
                 currentDistance -= hero.getMovementSpeed();
-                int[] updatedHeroStats = enemy.rangeAttack(hero.getHealth(),hero.getArmor());
-                hero.setHealth(updatedHeroStats[0]);
-                hero.setArmor(updatedHeroStats[1]);
-                System.out.printf("The arrow hits you for %d damage!%n",updatedHeroStats[2]);
+                double[] updatedHeroStats = enemy.rangeAttack(hero.getHealth(),hero.getArmorRating());
+                hero.setHealth((int) updatedHeroStats[0]);
+                System.out.printf("The arrow hits you for %s damage!%n",df.format(updatedHeroStats[1]));
                 System.out.printf("You move up %d paces!%n",hero.getMovementSpeed());
             }else if(choice.equalsIgnoreCase("defend")){
                 int dodge = random.nextInt(4)+1;
@@ -646,10 +645,9 @@ public class CliffCastle {
                     System.out.printf("You move up %d paces.%n",halfSpeed);
                 }
                 else{
-                    int[] updatedHeroStats = enemy.rangeAttack(hero.getHealth(),hero.getArmor());
-                    hero.setHealth(updatedHeroStats[0]);
-                    hero.setArmor(updatedHeroStats[1]);
-                    System.out.printf("The arrow hits you for %d damage!",updatedHeroStats[2]);
+                    double[] updatedHeroStats = enemy.rangeAttack(hero.getHealth(),hero.getArmorRating());
+                    hero.setHealth((int) updatedHeroStats[0]);
+                    System.out.printf("The arrow hits you for %s damage!",df.format(updatedHeroStats[1]));
                     System.out.printf("You move up %d paces.\n",halfSpeed);
                 }
             }else if(choice.equalsIgnoreCase("run")){
@@ -733,7 +731,7 @@ public class CliffCastle {
             System.out.println("Would you like to check your current status?");
             String statusCheck = sc.nextLine();
             if (statusCheck.trim().equalsIgnoreCase("yes")) {
-                System.out.println(hero.getName() + "'s Health: " + hero.getHealth() + ", Armor: " + hero.getArmor() + ", Potions: " + hero.getPotion());
+                System.out.println(hero.getName() + "'s Health: " + hero.getHealth() + ", Potions: " + hero.getPotion());
             }
             System.out.println("Drink a potion before proceeding?");
             String potionCheck = sc.nextLine();
@@ -741,7 +739,9 @@ public class CliffCastle {
                 int[] updatedHeroStats = drinkPotion(hero.getPotion(), hero.getHealth());
                 hero.setHealth(updatedHeroStats[0]);
                 hero.setPotion(updatedHeroStats[1]);
-                System.out.println(hero.getName() + "'s Health: " + hero.getHealth() + ", Armor: " + hero.getArmor() + ", Potions: " + hero.getPotion());
+                System.out.println(hero.getName() + "'s Health: " + hero.getHealth() + ", Potions: " + hero.getPotion());
             }
         }
+
+
 }
