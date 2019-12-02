@@ -14,14 +14,12 @@ public class Hero {
     private boolean wearingHelm = false;
 
     private void cheater() {
-        if (this.name.equalsIgnoreCase("cheater")) {
             this.setHealth(10000);
             this.setArmor(10000);
             this.setAttack(10000);
-        }
     }
     public void checkName(){
-            if (this.name.equalsIgnoreCase("cheater")) {
+            if (this.name.trim().equalsIgnoreCase("cheater")) {
             cheater();
             }
     }
