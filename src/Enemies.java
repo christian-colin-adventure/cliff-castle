@@ -1,12 +1,22 @@
 import java.util.Random;
 
-public class Enemy {
+public class Enemies {
 
     private int Health;
     private int Armor;
     private int Attack;
+    private static int enemyhp;
+    private static int enemymeleedmg;
+    private static int Level;
     private String name;
 
+
+    // TODO: Make enemies random enemies and make stronger versions of them when player levels up
+
+//    int[] enemyHpArray = {1, 9, 19, 24, 32, 40};
+//    int[] enemyMeleedmgArray = {1, 1, 4, 6, 7, 9};
+//    enemyhp = enemyHpArray[Level];
+//    enemymeleedmg = enemyMeleedmgArray[Level];
 
     public int getHealth() {
         return this.Health;
@@ -32,7 +42,7 @@ public class Enemy {
         this.Armor = newArmor;
     }
 
-    public Enemy(int health, int armor, int attackPower, String name){
+    public Enemies(int health, int armor, int attackPower, String name){
         this.Health = health;
         this.Armor = armor;
         this.Attack = attackPower;
