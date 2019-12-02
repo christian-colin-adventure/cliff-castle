@@ -8,8 +8,6 @@ public class Hero {
     private int Attack = 25;
     private int Potion = 5;
     private int MovementSpeed; // this is paces per move
-    private static int enemyhp;
-    private static int enemymeleedmg;
     private static int Level;
     private String name;
     private boolean wearingHelm = false;
@@ -26,29 +24,43 @@ public class Hero {
             }
     }
 
-    public void setClassAtt(String charClass){
-        if(charClass.equals("Warrior")){
+    public void setClassAtt(String charClass) {
+        if (charClass.equals("Warrior")) {
             this.setHealth(150);
             this.setAttack(20);
             this.setArmor(25);
             this.setPotion(5);
             this.setMovementSpeed(7);
             Level = 1;
-        } else if(charClass.equals("Paladin")) {
+        } else if (charClass.equals("Paladin")) {
             this.setHealth(120);
             this.setAttack(30);
             this.setArmor(30);
             this.setPotion(3);
             this.setMovementSpeed(7);
             Level = 1;
-        } else if(charClass.equals("Barbarian")) {
+        } else if (charClass.equals("Barbarian")) {
             this.setHealth(225);
             this.setAttack(40);
             this.setArmor(0);
             this.setPotion(0);
             this.setMovementSpeed(5);
             Level = 1;
+//        } else if(charClass.equals("Ranger")) {
+//            this.setHealth(130);
+//            this.setAttack(15);
+//            this.setArmor(50);
+//            this.setPotion(5);
+//            this.setMovementSpeed(10);
+//        } else if(charClass.equals("Mage")) {
+//            this.setHealth(120);
+//            this.setAttack(10);
+//            this.setArmor(0);
+//            this.setPotion(4);
+//            this.setMovementSpeed(3);
+//        }
         }
+        //This curly bracket can be deleted when these classes are uncommented
     }
 
 
