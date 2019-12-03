@@ -56,15 +56,22 @@ public class Hero {
             this.setChestSlot(Equipment.LeatherTunic);
             this.setBootSlot(Equipment.LeatherBoots);
             Level = 1;
+//        } else if(charClass.equals("Ranger")) {
+//            this.setHealth(130);
+//            this.setAttack(15);
+//            this.setArmor(50);
+//            this.setPotion(5);
+//            this.setMovementSpeed(10);
+//        } else if(charClass.equals("Mage")) {
+//            this.setHealth(120);
+//            this.setAttack(10);
+//            this.setArmor(0);
+//            this.setPotion(4);
+//            this.setMovementSpeed(3);
+//        }
         }
+        //This curly bracket can be deleted when these classes are uncommented
     }
-
-    // TODO: Make enemies random enemies and make stronger versions of them when player levels up
-
-//    int[] enemyHpArray = {1, 9, 19, 24, 32, 40};
-//    int[] enemyMeleedmgArray = {1, 1, 4, 6, 7, 9};
-//    enemyhp = enemyHpArray[Level];
-//    enemymeleedmg = enemyMeleedmgArray[Level];
 
 
     public Hero(String name){
