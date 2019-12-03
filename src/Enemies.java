@@ -58,31 +58,22 @@ public class Enemies {
         this.RangeAttack = rangePower;
         this.name = name;
     }
-    public int[] meleeAttack(int health, int armor) {
+    public double[] meleeAttack(int health, double armorRating) {
         Random rand = new Random();
         // Health and armor is going to equal opposition health and armor.
         // Attack points is going to be whoever is attacking.
-        int hit = rand.nextInt(this.getMeleeAttack());
+        double hit = rand.nextInt(this.getMeleeAttack());
+        hit = Math.floor(hit*(1.0 - armorRating));
+        health -= hit;
 
-        if (armor >= hit) {
-            armor = armor - hit;
-        } else {
-            health -= (hit - armor);
-            armor = 0;
-        }
-        return new int[]{health, armor, hit};
+        return new double[]{health, hit};
     }
 
-    public int[] rangeAttack(int health, int armor){
+    public double[] rangeAttack(int health, double armorRating){
         Random rand = new Random();
-        int hit = rand.nextInt(this.getRangeAttack());
-
-        if (armor >= hit) {
-            armor = armor - hit;
-        } else {
-            health -= (hit - armor);
-            armor = 0;
-        }
-        return new int[]{health, armor, hit};
+        double hit = rand.nextInt(this.getRangeAttack());
+        hit = Math.floor(hit*(1.0 - armorRating));
+        health -= hit;
+        return new double[]{health, hit};
     }
 }

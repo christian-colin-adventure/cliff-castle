@@ -4,17 +4,21 @@ public class Hero {
     // Player attributes
     private int Health = 100;
     private String charClass;
-    private int Armor = 25;
+//    private int Armor = 25;
     private int Attack = 25;
     private int Potion = 5;
     private int MovementSpeed; // this is paces per move
+    private Armor headSlot;
+    private Armor chestSlot;
+    private Armor bootSlot;
+    private static int enemyhp;
+    private static int enemymeleedmg;
     private static int Level;
     private String name;
-    private boolean wearingHelm = false;
 
     private void cheater() {
             this.setHealth(10000);
-            this.setArmor(10000);
+//            this.setArmor(10000);
             this.setAttack(10000);
             this.setMovementSpeed(10000);
     }
@@ -24,27 +28,33 @@ public class Hero {
             }
     }
 
-    public void setClassAtt(String charClass) {
-        if (charClass.equals("Warrior")) {
+    public void setClassAtt(String charClass){
+        if(charClass.equalsIgnoreCase("Warrior")){
             this.setHealth(150);
             this.setAttack(20);
-            this.setArmor(25);
             this.setPotion(5);
             this.setMovementSpeed(7);
+            this.setHeadSlot(Equipment.EmptySlot);
+            this.setChestSlot(Equipment.ChainmailChest);
+            this.setBootSlot(Equipment.LeatherBoots);
             Level = 1;
-        } else if (charClass.equals("Paladin")) {
+        } else if(charClass.equalsIgnoreCase("Paladin")) {
             this.setHealth(120);
             this.setAttack(30);
-            this.setArmor(30);
             this.setPotion(3);
             this.setMovementSpeed(7);
+            this.setHeadSlot(Equipment.EmptySlot);
+            this.setChestSlot(Equipment.PlateChest);
+            this.setBootSlot(Equipment.PlateBoots);
             Level = 1;
-        } else if (charClass.equals("Barbarian")) {
+        } else if(charClass.equalsIgnoreCase("Barbarian")) {
             this.setHealth(225);
             this.setAttack(40);
-            this.setArmor(0);
             this.setPotion(0);
             this.setMovementSpeed(5);
+            this.setHeadSlot(Equipment.EmptySlot);
+            this.setChestSlot(Equipment.LeatherTunic);
+            this.setBootSlot(Equipment.LeatherBoots);
             Level = 1;
 //        } else if(charClass.equals("Ranger")) {
 //            this.setHealth(130);
@@ -77,9 +87,9 @@ public class Hero {
         return this.Health;
     }
 
-    public int getArmor() {
-        return this.Armor;
-    }
+//    public int getArmor() {
+//        return this.Armor;
+//    }
 
     public int getAttack(){
         return this.Attack;
@@ -89,17 +99,14 @@ public class Hero {
         return this.Potion;
     }
 
-    public boolean isWearingHelm(){
-        return wearingHelm;
-    }
 
     public void setHealth(int newHealth){
         this.Health = newHealth;
     }
 
-    public void setArmor(int newArmor){
-        this.Armor = newArmor;
-    }
+//    public void setArmor(int newArmor){
+//        this.Armor = newArmor;
+//    }
 
     public void setPotion(int potion) {
         this.Potion = potion;
@@ -121,16 +128,66 @@ public class Hero {
         MovementSpeed = movementSpeed;
     }
 
-    public void setWearingHelm(boolean wearingHelm) {
-        this.wearingHelm = wearingHelm;
-    }
-
     public void increaseAttack(int numIncrease){
         this.Attack += numIncrease;
     }
 
-    public void increaseArmor(int numIncrease){
-        this.Armor += numIncrease;
+
+
+    public String getCharClass() {
+        return charClass;
+    }
+
+    public void setCharClass(String charClass) {
+        this.charClass = charClass;
+    }
+
+    public Armor getHeadSlot() {
+        return headSlot;
+    }
+
+    public void setHeadSlot(Armor headSlot) {
+        this.headSlot = headSlot;
+    }
+
+    public Armor getChestSlot() {
+        return chestSlot;
+    }
+
+    public void setChestSlot(Armor chestSlot) {
+        this.chestSlot = chestSlot;
+    }
+
+    public Armor getBootSlot() {
+        return bootSlot;
+    }
+
+    public void setBootSlot(Armor bootSlot) {
+        this.bootSlot = bootSlot;
+    }
+
+    public static int getEnemyhp() {
+        return enemyhp;
+    }
+
+    public static void setEnemyhp(int enemyhp) {
+        Hero.enemyhp = enemyhp;
+    }
+
+    public static int getEnemymeleedmg() {
+        return enemymeleedmg;
+    }
+
+    public static void setEnemymeleedmg(int enemymeleedmg) {
+        Hero.enemymeleedmg = enemymeleedmg;
+    }
+
+    public static int getLevel() {
+        return Level;
+    }
+
+    public static void setLevel(int level) {
+        Level = level;
     }
 
     public int[] attack(int enemyHealth, int enemyArmor) {
@@ -150,5 +207,9 @@ public class Hero {
         }
 
         return new int[]{enemyHealth, enemyArmor, hit};
+    }
+
+    public double getArmorRating(){
+        return (this.getHeadSlot().getArmorRating()+this.getChestSlot().getArmorRating()+this.getBootSlot().getArmorRating())/100.0;
     }
 }
