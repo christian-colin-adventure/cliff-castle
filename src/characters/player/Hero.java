@@ -1,29 +1,25 @@
+package characters.player;
+
+import items.*;
 import java.util.Random;
 
-public class Hero {
+public class Hero<charClass> extends Character {
     // Player attributes
-    private int Health = 100;
     private String charClass;
-//    private int Armor = 25;
-    private int Attack = 25;
+//    private int Items.Armor = 25;
     private int Potion = 5;
-    private int MovementSpeed; // this is paces per move
     private Armor headSlot;
     private Armor chestSlot;
     private Armor bootSlot;
-    private static int enemyhp;
-    private static int enemymeleedmg;
     private static int Level;
-    private String name;
 
     private void cheater() {
             this.setHealth(10000);
-//            this.setArmor(10000);
             this.setAttack(10000);
             this.setMovementSpeed(10000);
     }
     public void checkName(){
-            if (this.name.trim().equalsIgnoreCase("cheater")) {
+            if (this.Name.trim().equalsIgnoreCase("cheater")) {
             cheater();
             }
     }
@@ -74,22 +70,19 @@ public class Hero {
     }
 
 
-    public Hero(String name){
-        this.name = name;
+    public Hero(String name,String charClass){
+        super(name);
         this.charClass = charClass;
     }
 
     public String getName() {
-        return name;
+        return super.Name;
     }
 
     public int getHealth() {
         return this.Health;
     }
 
-//    public int getArmor() {
-//        return this.Armor;
-//    }
 
     public int getAttack(){
         return this.Attack;
@@ -104,9 +97,6 @@ public class Hero {
         this.Health = newHealth;
     }
 
-//    public void setArmor(int newArmor){
-//        this.Armor = newArmor;
-//    }
 
     public void setPotion(int potion) {
         this.Potion = potion;
@@ -117,7 +107,7 @@ public class Hero {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.Name = name;
     }
 
     public int getMovementSpeed() {
@@ -164,22 +154,6 @@ public class Hero {
 
     public void setBootSlot(Armor bootSlot) {
         this.bootSlot = bootSlot;
-    }
-
-    public static int getEnemyhp() {
-        return enemyhp;
-    }
-
-    public static void setEnemyhp(int enemyhp) {
-        Hero.enemyhp = enemyhp;
-    }
-
-    public static int getEnemymeleedmg() {
-        return enemymeleedmg;
-    }
-
-    public static void setEnemymeleedmg(int enemymeleedmg) {
-        Hero.enemymeleedmg = enemymeleedmg;
     }
 
     public static int getLevel() {

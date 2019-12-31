@@ -1,3 +1,7 @@
+import characters.Enemies;
+import items.Equipment;
+import characters.player.Hero;
+
 import java.text.DecimalFormat;
 import java.util.Random;
 import java.util.Scanner;
@@ -9,7 +13,7 @@ public class CliffCastle {
 
         //Class selection phase and naming
 
-        Hero hero = new Hero("Hero");
+        Hero hero = new Hero("characters.player.Hero","Warrior");
         hero.setClassAtt("Warrior");
         hero.setClassAtt("Paladin");
         hero.setClassAtt("Barbarian");
@@ -94,7 +98,7 @@ public class CliffCastle {
                     "                         |==| \\\\|==|\n" +
                     "                        /v-'(  \\\\`-v\\\n" +
                     "                       // .-'   \\\\. \\\\\n" +
-                    "                       `-'       \\\\`-'    Hero\n" +
+                    "                       `-'       \\\\`-'  \n" +
                     "                                  \\|");
         } else {
             System.out.println("Ok, I thought knights were supposed to be brave...");
@@ -386,7 +390,7 @@ public class CliffCastle {
                                         "  \\  )   /   \\   (  /\n" +
                                         "   )/   /     \\   \\(\n" +
                                         "   '    `-`-'-'    `");
-                                System.out.printf("\"You have defeated a great evil today and have earned our divine gratitude.\nLive the rest of your days in your castle.\nWell see you when you pass to the next realm, Great Hero %s\"", hero.getName());
+                                System.out.printf("\"You have defeated a great evil today and have earned our divine gratitude.\nLive the rest of your days in your castle.\nWell see you when you pass to the next realm, Great characters.player.Hero %s\"", hero.getName());
                                 System.exit(0);
                             }
                         } else {
@@ -574,7 +578,7 @@ public class CliffCastle {
         Scanner sc = new Scanner(System.in);
         while (hero.getHealth() > 0 && enemies.getHealth() > 0) {
             System.out.println(hero.getName() + "'s Health: " + hero.getHealth() +", Potions: " + hero.getPotion());
-            System.out.println(enemies.getName() + "'s Health: " + enemies.getHealth() + ", Armor: " + enemies.getArmor());
+            System.out.println(enemies.getName() + "'s Health: " + enemies.getHealth() + ", Items.Armor: " + enemies.getArmor());
             System.out.println("Attack, Drink Potion, Run");
             String choice = sc.nextLine();
             if (choice.trim().equalsIgnoreCase("attack")) {
@@ -626,7 +630,7 @@ public class CliffCastle {
         int currentDistance = enemyDistance;
         while(currentDistance > 0 ){
             System.out.println(hero.getName() + "'s Health: " + hero.getHealth() +", Potions: " + hero.getPotion());
-            System.out.println(enemy.getName() + "'s Health: " + enemy.getHealth() + ", Armor: " + enemy.getArmor());
+            System.out.println(enemy.getName() + "'s Health: " + enemy.getHealth() + ", Items.Armor: " + enemy.getArmor());
             System.out.printf("The enemy is current %d paces away!%n",currentDistance);
             System.out.println("Move in, Defend, Run");
             String choice = sc.nextLine();

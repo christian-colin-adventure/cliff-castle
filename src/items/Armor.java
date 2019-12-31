@@ -1,3 +1,5 @@
+package items;
+
 public class Armor {
     private String name;
     private int armorRating;

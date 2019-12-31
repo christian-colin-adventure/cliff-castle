@@ -1,6 +1,10 @@
+package characters;
+
+import characters.player.Character;
+
 import java.util.Random;
 
-public class Enemies {
+public class Enemies extends Character {
 
     private int Health;
     private int Armor;
@@ -14,7 +18,7 @@ public class Enemies {
 
 
 
-    // TODO: Make enemies random enemies and make stronger versions of them when player levels up
+    // TODO: Make enemies random enemies and make stronger versions of them when characters.player levels up
 
     private static String[] enemyHpArray = {"1", "10", "20", "30", "40", "50"};
 
@@ -52,11 +56,11 @@ public class Enemies {
     }
 
     public Enemies(int health, int armor, int meleePower,int rangePower, String name){
+        super(name);
         this.Health = health;
         this.Armor = armor;
         this.MeleeAttack = meleePower;
         this.RangeAttack = rangePower;
-        this.name = name;
     }
     public double[] meleeAttack(int health, double armorRating) {
         Random rand = new Random();
